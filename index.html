@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado &mdash; Código de Ética e Disciplina Militar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-950:#0b1420;
+    --navy-900:#101d2e;
+    --navy-800:#16253a;
+    --navy-700:#1d3049;
+    --navy-600:#2a4363;
+    --brass:#c9a227;
+    --brass-bright:#e3bf46;
+    --paper:#ece7d8;
+    --paper-dim:#b9c0c9;
+    --slate:#7e8ba0;
+    --grave:#8b2635;
+    --grave-bright:#c23548;
+    --media:#a67a1e;
+    --media-bright:#d99f2b;
+    --leve:#3f6b4f;
+    --leve-bright:#5c9270;
+    --ok:#3f6b4f;
+    --ok-bright:#5c9270;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(201,162,39,0.08), transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, rgba(42,67,99,0.35), transparent 55%),
+      var(--navy-950);
+    color:var(--paper);
+    font-family:'PT Serif', Georgia, serif;
+    min-height:100vh;
+    line-height:1.5;
+  }
+  .stripe{
+    height:6px;
+    width:100%;
+    background:repeating-linear-gradient(90deg, var(--brass) 0 24px, transparent 24px 48px);
+    opacity:0.7;
+  }
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:36px 22px 64px;
+  }
+  header.top{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:8px;
+  }
+  .badge{
+    width:46px;height:46px;flex:0 0 auto;
+    border:2px solid var(--brass);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Oswald',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    color:var(--brass-bright);
+    letter-spacing:0.5px;
+    background:radial-gradient(circle at 35% 30%, rgba(201,162,39,0.18), transparent 70%);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--slate);
+  }
+  h1{
+    font-family:'Oswald',sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-size:clamp(26px,5vw,36px);
+    margin:2px 0 0;
+    color:var(--paper);
+  }
+  .sub{
+    color:var(--paper-dim);
+    font-size:16px;
+    margin-top:10px;
+    max-width:60ch;
+  }
+  .card{
+    background:linear-gradient(180deg, var(--navy-800), var(--navy-900));
+    border:1px solid var(--navy-600);
+    border-radius:4px;
+    padding:28px 26px;
+    margin-top:26px;
+    position:relative;
+    box-shadow:0 20px 40px -20px rgba(0,0,0,0.6);
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:4px;
+    background:var(--brass);
+    border-radius:4px 0 0 4px;
+  }
+  .field-label{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-size:13px;
+    color:var(--brass-bright);
+    margin-bottom:10px;
+    display:block;
+  }
+  .count-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
+  }
+  .chip-btn{
+    font-family:'Oswald',sans-serif;
+    font-size:15px;
+    letter-spacing:0.5px;
+    padding:10px 18px;
+    border-radius:3px;
+    border:1px solid var(--navy-600);
+    background:var(--navy-700);
+    color:var(--paper);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .chip-btn:hover{border-color:var(--brass);color:var(--brass-bright);}
+  .chip-btn.active{
+    background:var(--brass);
+    border-color:var(--brass);
+    color:var(--navy-950);
+    font-weight:600;
+  }
+  .custom-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:6px;
+  }
+  input[type=number]{
+    width:90px;
+    background:var(--navy-950);
+    border:1px solid var(--navy-600);
+    color:var(--paper);
+    font-family:'JetBrains Mono',monospace;
+    font-size:16px;
+    padding:9px 10px;
+    border-radius:3px;
+  }
+  input[type=number]:focus{outline:2px solid var(--brass);outline-offset:1px;}
+  .hint{color:var(--slate);font-size:13px;margin-top:14px;}
+  .btn-primary{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-weight:600;
+    font-size:15px;
+    padding:14px 26px;
+    background:var(--brass);
+    color:var(--navy-950);
+    border:none;
+    border-radius:3px;
+    cursor:pointer;
+    margin-top:22px;
+    transition:transform .12s ease, background .15s ease;
+    width:100%;
+  }
+  .btn-primary:hover{background:var(--brass-bright);transform:translateY(-1px);}
+  .btn-primary:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+  .btn-ghost{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-weight:600;
+    font-size:14px;
+    padding:12px 20px;
+    background:transparent;
+    color:var(--paper);
+    border:1px solid var(--navy-600);
+    border-radius:3px;
+    cursor:pointer;
+    margin-top:12px;
+    width:100%;
+  }
+  .btn-ghost:hover{border-color:var(--brass);color:var(--brass-bright);}
+
+  /* ---- quiz screen ---- */
+  .progress-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--slate);
+    margin-bottom:10px;
+    letter-spacing:0.5px;
+  }
+  .progress-bar{
+    height:4px;
+    width:100%;
+    background:var(--navy-700);
+    border-radius:2px;
+    overflow:hidden;
+    margin-bottom:22px;
+  }
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--brass), var(--brass-bright));
+    width:0%;
+    transition:width .35s ease;
+  }
+  .score-row{
+    display:flex;
+    gap:18px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    margin-bottom:6px;
+  }
+  .score-ok{color:var(--ok-bright);}
+  .score-bad{color:var(--grave-bright);}
+  .question-num{
+    font-family:'Oswald',sans-serif;
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--brass-bright);
+    text-transform:uppercase;
+  }
+  .question-text{
+    font-size:19px;
+    line-height:1.55;
+    margin:14px 0 24px;
+    color:var(--paper);
+  }
+  .question-text .art-ref{
+    display:block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    color:var(--slate);
+    margin-top:10px;
+    letter-spacing:0.5px;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .opt-btn{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-align:left;
+    font-family:'Oswald',sans-serif;
+    font-size:16px;
+    letter-spacing:0.5px;
+    padding:15px 18px;
+    border-radius:3px;
+    border:1.5px solid var(--navy-600);
+    background:var(--navy-700);
+    color:var(--paper);
+    cursor:pointer;
+    transition:all .12s ease;
+  }
+  .opt-btn:hover:not(:disabled){border-color:var(--brass);background:var(--navy-600);}
+  .opt-btn:disabled{cursor:default;}
+  .opt-dot{
+    width:11px;height:11px;border-radius:50%;flex:0 0 auto;
+    border:2px solid currentColor;
+  }
+  .opt-btn.grave .opt-dot{color:var(--grave-bright);}
+  .opt-btn.media .opt-dot{color:var(--media-bright);}
+  .opt-btn.leve .opt-dot{color:var(--leve-bright);}
+  .opt-btn.correct-pick{
+    background:rgba(63,107,79,0.22);
+    border-color:var(--ok-bright);
+  }
+  .opt-btn.wrong-pick{
+    background:rgba(139,38,53,0.22);
+    border-color:var(--grave-bright);
+  }
+  .opt-btn.reveal-correct{
+    border-color:var(--ok-bright);
+    box-shadow:0 0 0 1px var(--ok-bright) inset;
+  }
+
+  .stamp-zone{
+    position:relative;
+    min-height:0;
+  }
+  .stamp{
+    font-family:'Oswald',sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    font-size:26px;
+    display:inline-block;
+    padding:10px 22px;
+    border:4px double;
+    border-radius:6px;
+    margin:22px 0 6px;
+    transform:rotate(-4deg);
+    animation:stampIn .32s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  .stamp.ok{color:var(--ok-bright);border-color:var(--ok-bright);text-shadow:0 0 14px rgba(92,146,112,0.35);}
+  .stamp.bad{color:var(--grave-bright);border-color:var(--grave-bright);text-shadow:0 0 14px rgba(194,53,72,0.35);}
+  @keyframes stampIn{
+    0%{transform:rotate(-4deg) scale(2.4);opacity:0;}
+    60%{opacity:1;}
+    100%{transform:rotate(-4deg) scale(1);opacity:1;}
+  }
+  .explain{
+    background:var(--navy-950);
+    border:1px solid var(--navy-600);
+    border-left:3px solid var(--grave-bright);
+    padding:16px 18px;
+    border-radius:3px;
+    font-size:15px;
+    color:var(--paper-dim);
+    margin-top:14px;
+    line-height:1.6;
+  }
+  .explain b{color:var(--paper);}
+  .explain.correctbox{border-left-color:var(--ok-bright);}
+  .review-note{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--media-bright);
+    margin-top:10px;
+  }
+
+  /* results */
+  .big-score{
+    font-family:'Oswald',sans-serif;
+    font-weight:700;
+    font-size:64px;
+    letter-spacing:1px;
+    text-align:center;
+    color:var(--brass-bright);
+    margin:6px 0 0;
+  }
+  .big-score-sub{
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--slate);
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+  }
+  .stat-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:26px;
+  }
+  .stat-box{
+    border:1px solid var(--navy-600);
+    border-radius:4px;
+    padding:16px;
+    text-align:center;
+    background:var(--navy-950);
+  }
+  .stat-box .n{font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;}
+  .stat-box .l{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate);letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
+  .missed-list{
+    margin-top:26px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    max-height:340px;
+    overflow-y:auto;
+    padding-right:4px;
+  }
+  .missed-item{
+    border:1px solid var(--navy-600);
+    border-left:3px solid var(--grave-bright);
+    border-radius:3px;
+    padding:12px 14px;
+    font-size:14px;
+    color:var(--paper-dim);
+  }
+  .missed-item b{color:var(--paper);}
+  .tag{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:2px 8px;
+    border-radius:10px;
+    margin-left:6px;
+  }
+  .tag.grave{background:rgba(139,38,53,0.25);color:var(--grave-bright);}
+  .tag.media{background:rgba(166,122,30,0.25);color:var(--media-bright);}
+  .tag.leve{background:rgba(63,107,79,0.25);color:var(--leve-bright);}
+  footer{
+    text-align:center;
+    color:var(--slate);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    margin-top:40px;
+    letter-spacing:0.5px;
+  }
+  .hidden{display:none !important;}
+  @media (max-width:480px){
+    .wrap{padding:24px 14px 48px;}
+    .card{padding:20px 16px;}
+    .stat-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<div class="wrap">
+
+  <header class="top">
+    <div class="badge">PM</div>
+    <div>
+      <div class="eyebrow">Preparatório &middot; Concursos Militares</div>
+      <h1>Simulado de Ética e Disciplina</h1>
+    </div>
+  </header>
+  <p class="sub">Treine a classificação das transgressões disciplinares em <b>graves</b>, <b>médias</b> e <b>leves</b>, com base no Art. 18 do Código de Ética e Disciplina Militar. Sempre que você errar, a explicação aparece na hora &mdash; e a questão volta a ser cobrada mais adiante, para fixar o conteúdo.</p>
+
+  <!-- ===================== TELA 1: CONFIGURAÇÃO ===================== -->
+  <section id="screen-setup" class="card">
+    <span class="field-label">Quantas questões você quer responder?</span>
+    <div class="count-row" id="countChips">
+      <button class="chip-btn" data-n="10">10</button>
+      <button class="chip-btn" data-n="20">20</button>
+      <button class="chip-btn active" data-n="30">30</button>
+      <button class="chip-btn" data-n="50">50</button>
+      <button class="chip-btn" data-n="161">Todas (161)</button>
+    </div>
+    <div class="custom-row">
+      <span class="field-label" style="margin-bottom:0;">ou um número específico:</span>
+      <input type="number" id="customCount" min="1" max="161" placeholder="ex: 40">
+    </div>
+    <p class="hint">Banco com as 161 condutas do Art. 18 (74 graves, 64 médias, 23 leves). Se você errar uma questão, ela retorna mais à frente no mesmo simulado para reforçar a memorização.</p>
+    <button class="btn-primary" id="startBtn">Iniciar simulado</button>
+  </section>
+
+  <!-- ===================== TELA 2: QUIZ ===================== -->
+  <section id="screen-quiz" class="card hidden">
+    <div class="progress-wrap">
+      <span id="progLabel">QUESTÃO 1</span>
+      <span id="remainingLabel">160 restantes</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="score-row">
+      <span class="score-ok" id="scoreOkLabel">✔ 0 acertos</span>
+      <span class="score-bad" id="scoreBadLabel">✘ 0 erros</span>
+    </div>
+
+    <div class="question-num" id="classifyLabel">Classifique a conduta</div>
+    <p class="question-text" id="questionText">&nbsp;</p>
+
+    <div class="options" id="optionsWrap">
+      <button class="opt-btn grave" data-val="grave"><span class="opt-dot"></span> Transgressão GRAVE</button>
+      <button class="opt-btn media" data-val="media"><span class="opt-dot"></span> Transgressão MÉDIA</button>
+      <button class="opt-btn leve" data-val="leve"><span class="opt-dot"></span> Transgressão LEVE</button>
+    </div>
+
+    <div class="stamp-zone" id="feedbackZone"></div>
+
+    <button class="btn-primary hidden" id="nextBtn">Próxima questão</button>
+  </section>
+
+  <!-- ===================== TELA 3: RESULTADO ===================== -->
+  <section id="screen-result" class="card hidden">
+    <span class="eyebrow">Relatório final</span>
+    <p class="big-score" id="finalPct">0%</p>
+    <p class="big-score-sub" id="finalPctSub">de aproveitamento</p>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="n score-ok" id="statCorrect">0</div><div class="l">Acertos</div></div>
+      <div class="stat-box"><div class="n score-bad" id="statWrong">0</div><div class="l">Erros</div></div>
+      <div class="stat-box"><div class="n" id="statQuestions" style="color:var(--brass-bright)">0</div><div class="l">Questões no banco</div></div>
+      <div class="stat-box"><div class="n" id="statAttempts" style="color:var(--paper-dim)">0</div><div class="l">Tentativas totais</div></div>
+    </div>
+
+    <div id="missedSection">
+      <span class="field-label" style="margin-top:26px;display:block;">Condutas que você errou pelo menos uma vez</span>
+      <div class="missed-list" id="missedList"></div>
+    </div>
+
+    <button class="btn-primary" id="restartBtn">Fazer novo simulado</button>
+    <button class="btn-ghost" id="reviewAgainBtn">Refazer só as que errei</button>
+  </section>
+
+  <footer>Baseado no Art. 18 do Código de Ética e Disciplina Militar &middot; simulado para fins de estudo</footer>
+</div>
+
+<script>
+/* ============================================================
+   BANCO DE DADOS — extraído do Art. 18, §§1º, 2º e 3º
+   ============================================================ */
+const GRAVES = [
+"desconsiderar os direitos constitucionais da pessoa no ato da prisão",
+"comparecer ou tomar parte de movimento reivindicatório, no qual os participantes portem qualquer tipo de armamento, ou participar de greve",
+"usar de força desnecessária no atendimento de ocorrência ou no ato de efetuar prisão",
+"não garantir a integridade física e psicológica das pessoas que tiver sob sua guarda",
+"agredir física, moral ou psicologicamente preso sob sua guarda ou permitir que outros o façam",
+"permitir que o preso, sob sua guarda, conserve em seu poder instrumentos ou outros objetos proibidos, com que possa ferir a si próprio ou a outrem",
+"faltar com a verdade",
+"ameaçar, induzir ou instigar alguém para que não declare a verdade em processo administrativo, civil ou penal",
+"utilizar-se do anonimato, inclusive através da internet, mídia eletrônica ou quaisquer outros meios de comunicação social, a fim de denegrir ou comprometer a imagem da Corporação, de seus integrantes ou para quaisquer outros fins ilícitos",
+"espalhar boatos ou notícias tendenciosas a prejudicar a boa ordem civil ou militar ou o bom nome da Corporação",
+"envolver, indevidamente, o nome de outrem para esquivar-se de responsabilidade",
+"publicar, divulgar ou contribuir para a divulgação de fatos, documentos ou assuntos administrativos ou técnicos de natureza militar ou judiciária, que possam concorrer para o desprestígio da Corporação",
+"atentar contra a hierarquia ou a disciplina, comprometer a segurança da sociedade e do Estado",
+"atentar contra a honra e a imagem de pessoas, contrariando os preceitos legais em vigor",
+"liberar preso ou detido ou dispensar parte envolvida em ocorrência sem competência legal para tanto",
+"solicitar, exigir, receber ou permitir que o subordinado o faça, em razão da função pública, vantagem indevida, bem ou valor, por prestação de serviço em qualquer tipo de ocorrência",
+"assumir compromisso em nome da Corporação, ou representá-la em qualquer ato, sem estar devidamente autorizado",
+"apropriar-se de bens pertencentes ao patrimônio público ou particular",
+"empregar subordinado ou servidor civil, ou desviar qualquer meio material ou financeiro sob sua responsabilidade ou não, para a execução de atividades diversas daquelas para as quais foram destinadas, em proveito próprio ou de outrem",
+"provocar desfalques ou deixar de adotar providências, na esfera de suas atribuições, para evitá-los",
+"utilizar-se da condição de militar estadual para obter facilidades pessoais de qualquer natureza ou para encaminhar negócios particulares ou de terceiros",
+"dar, receber, pedir ou exigir gratificação ou presente com finalidade de retardar, apressar ou obter solução favorável em qualquer ato de serviço",
+"fazer, diretamente ou por intermédio de outrem, agiotagem ou transação pecuniária envolvendo assunto de serviço, bens da administração pública ou material cuja comercialização seja proibida",
+"exercer o militar estadual em serviço ativo a função de segurança, investigação ou vigilância particulares, ou administrar ou manter vínculo de qualquer natureza com empresa do ramo de segurança, vigilância ou investigação, ou outra que tenha relação com as funções desempenhadas na Corporação, para as quais recebeu formação específica",
+"exercer o militar estadual do serviço ativo, em empresas ou a particulares, atividade de instrutor, professor ou consultoria a fim de ministrar conhecimentos técnicos policiais-militares adquiridos em cursos realizados na Corporação",
+"exercer o militar estadual da ativa o comércio, ou tomar parte na administração ou gerência de sociedade empresarial e comercial com fins lucrativos, ou dela ser sócio, exceto como acionista, cotista ou comanditário",
+"exercer qualquer atividade estranha à instituição militar com prejuízo do serviço ou com emprego de meios do Estado, ou manter vínculo de qualquer natureza com organização voltada para a prática de atividade tipificada como contravenção ou crime",
+"exercer, individual ou coletivamente, atividades de inteligência, sem estar devidamente credenciado ou autorizado por lei, em proveito próprio ou de terceiros para prática de delitos",
+"concorrer para o desprestígio da Corporação Militar, por meio da prática de crime doloso devidamente comprovado em procedimento apuratório que, por sua natureza, amplitude e repercussão, afete gravemente a credibilidade e a imagem dos militares",
+"deixar de fiscalizar o subordinado que apresentar sinais exteriores de riqueza incompatíveis com a remuneração do cargo",
+"não cumprir, sem justo motivo, a execução de ordem recebida",
+"dar, por escrito ou verbalmente, ordem manifestamente ilegal que possa acarretar responsabilidade ao subordinado, ainda que não chegue a ser cumprida",
+"deixar de assumir a responsabilidade de seus atos ou pelos praticados por subordinados que agirem em cumprimento de sua ordem",
+"aconselhar ou concorrer para não ser cumprida qualquer ordem legal de autoridade competente, ou serviço, ou para que seja retardada, prejudicada ou embaraçada a sua execução",
+"ofender a moral e os bons costumes por atos, palavras ou gestos",
+"dirigir-se, referir-se ou responder a superior de modo desrespeitoso",
+"recriminar ato legal de superior ou procurar desconsiderá-lo",
+"ofender, provocar ou desafiar superior, par ou subordinado, estando ou não de serviço",
+"promover ou participar de luta corporal com superior, par ou subordinado hierárquico",
+"desrespeitar, em público ou pela imprensa ou pelas mídias sociais, os atos ou decisões das autoridades civis ou dos órgãos dos Poderes Constituídos ou de qualquer de seus representantes",
+"desrespeitar, desconsiderar ou ofender pessoa por palavras, atos ou gestos, no atendimento de ocorrência militar ou em outras situações de serviço",
+"evadir-se ou tentar evadir-se de escolta, bem como resistir a ela",
+"deixar de apurar transgressão disciplinar da qual tomou conhecimento",
+"deixar de comunicar ao superior imediato ou, na ausência deste, a qualquer autoridade superior, toda informação que tiver sobre iminente perturbação da ordem pública, crime ou grave alteração do serviço, logo que tenha conhecimento",
+"omitir, em boletim de ocorrência, relatório ou qualquer documento, dados indispensáveis ao esclarecimento dos fatos",
+"subtrair, extraviar, danificar ou inutilizar documentos, bens ou semoventes pertencentes ao patrimônio público ou particular, que estejam ou não sob sua responsabilidade",
+"deixar de assumir, orientar ou auxiliar o atendimento de ocorrência, quando esta, por sua natureza ou amplitude, assim o exigir",
+"abandonar serviço para o qual tenha sido designado ou recusar-se a executá-lo na forma determinada",
+"faltar sem justa causa ao expediente ou ao serviço para o qual esteja nominalmente escalado",
+"afastar-se, quando em serviço ou em razão de função, com veículo automotor, aeronave, embarcação ou a pé, da área em que deveria permanecer, ou não cumprir roteiro predeterminado para o serviço",
+"fazer uso, estar sob ação ou induzir outrem ao uso de substância proibida, entorpecente ou que determine dependência física ou psíquica, ou introduzi-las em local sob administração militar",
+"ingerir bebida alcoólica quando em serviço ou apresentar-se embriagado ou com sinais de embriaguez, para prestá-lo",
+"ingerir bebida alcoólica, uniformizado e fora do serviço, salvo em eventos previamente autorizados",
+"portar ou possuir arma em desacordo com as normas vigentes",
+"andar ostensivamente armado, em trajes civis, não se achando de serviço",
+"disparar arma por imprudência, negligência, imperícia ou desnecessariamente",
+"não obedecer às normas técnicas ou regras básicas de segurança no manuseio de armamentos e munições, ou não ter cautela ou devido zelo na guarda de arma própria ou sob sua responsabilidade",
+"não obedecer às normas técnicas ou regras básicas de segurança no manuseio e cautela de equipamentos, ou não ter o devido zelo na sua guarda e utilização quando estiver sob sua responsabilidade",
+"ceder, emprestar, remeter, empregar ou adulterar arma de fogo, acessório ou munição de uso proibido ou restrito, sem autorização e em desacordo com determinação legal ou regulamentar",
+"retirar ou tentar retirar de local sob administração militar material, documento, viatura, aeronave, embarcação ou animal, ou mesmo deles servir-se, sem ordem do responsável ou proprietário",
+"tentar entrar ou sair de Organização Militar, com tropa, sem prévio conhecimento da autoridade competente, salvo para fins de instrução ou serviço autorizado pelo comando",
+"dormir em serviço de policiamento, vigilância ou segurança de pessoas ou instalações, salvo quando autorizado",
+"pilotar aeronave ou embarcação oficial com imprudência, imperícia, negligência ou sem estar devidamente habilitado",
+"conduzir ou operar viatura militar com imprudência, imperícia, negligência ou sem ter a carteira nacional de habilitação",
+"frequentar ou fazer parte de sindicatos ou de associações cujos estatutos não estejam de conformidade com a lei",
+"retardar ou deixar de cumprir dever ou norma de ação estabelecidos em norma legal, em benefício próprio ou de terceiros, com prejuízos para a administração pública",
+"retardar ou deixar de praticar, indevidamente, ato de ofício",
+"deixar de punir o transgressor da disciplina, salvo se houver causa de justificação",
+"tomar parte em jogos proibidos ou jogar a dinheiro os permitidos, quando fardado",
+"divulgar, permitir ou concorrer para a divulgação indevida de fato ou documento de interesse da administração pública com classificação sigilosa",
+"ferir a hierarquia ou a disciplina, de modo comprometedor para a segurança da sociedade e do Estado",
+"frequentar lugares incompatíveis com o decoro social ou militar, salvo por motivo de serviço",
+"violar, alterar ou deixar de preservar local de crime",
+"simular doença para esquivar-se ao cumprimento do dever"
+];
+
+const MEDIAS = [
+"reter o preso, a vítima, as testemunhas, informantes ou partes não envolvidas por mais tempo que o necessário para a solução do procedimento policial, administrativo ou penal",
+"provocar ou fazer-se, voluntariamente, causa ou origem de alarmes injustificados",
+"comparecer ou tomar parte de movimento reivindicatório, no qual os participantes não portem qualquer tipo de armamento, que possa concorrer para o desprestígio da Corporação Militar ou ferir a hierarquia e a disciplina",
+"concorrer para a discórdia, desarmonia ou cultivar inimizade entre companheiros",
+"entender-se com o preso, de forma velada, ou deixar que alguém o faça, sem autorização de autoridade competente ou contrariando normas",
+"contrair dívida ou assumir compromisso superior às suas possibilidades financeiras, desde que venha a expor ostensivamente a imagem da Corporação Militar",
+"retardar, sem justo motivo, a execução de qualquer ordem recebida",
+"procrastinar, injustificadamente, expediente que lhe seja encaminhado, bem como atrasar o prazo para conclusão de procedimentos de polícia judiciária militar ou demais procedimentos e processos administrativos disciplinares militares",
+"manter relações de amizade ou exibir-se em público com pessoas de notórios e desabonados antecedentes criminais ou policiais, salvo por motivo relevante ou de serviço",
+"interferir na administração de serviço ou na execução de ordem ou missão sem ter a devida competência para tal",
+"desacreditar seu superior, par ou subordinado hierárquico",
+"deixar de prestar a superior hierárquico continência ou outros sinais de honra e respeito previstos em regulamento",
+"deixar de corresponder a cumprimento de seu subordinado",
+"deixar de exibir, estando ou não uniformizado, documento de identidade funcional, ou recusar-se a declarar seus dados de identificação quando lhe for exigido por autoridade competente",
+"deixar de comunicar fato que, em tese, constitua transgressão disciplinar",
+"deixar de fazer os devidos procedimentos formais no âmbito da aplicação de sanção disciplinar",
+"não levar ao conhecimento da autoridade competente fato ilegal ou irregularidade que presenciar ou de que tiver ciência e que não lhe caiba reprimir",
+"deixar de manifestar-se nos documentos e processos que lhe forem encaminhados, exceto nos casos de suspeição ou impedimento, ou de absoluta falta de elementos, hipóteses em que essas circunstâncias serão fundamentadas",
+"deixar de encaminhar à autoridade competente, no mais curto prazo e pela via hierárquica, documento ou processo que receber, se não for de sua alçada a solução",
+"retardar ou prejudicar o serviço de polícia judiciária militar que deva promover ou em que esteja investido",
+"desrespeitar atos administrativos, ordens judiciais, ou embaraçar suas execuções",
+"causar ou contribuir para a ocorrência de acidente de serviço ou instrução",
+"apresentar comunicação disciplinar ou representação sem fundamento, ou interpor recurso disciplinar sem observar as prescrições regulamentares",
+"dificultar ao subordinado o oferecimento de representação, recurso disciplinar ou o exercício do direito de petição",
+"faltar a qualquer ato de serviço em que deva tomar parte ou assistir, ou ainda retirar-se antes de seu encerramento sem a devida autorização",
+"faltar a ato judiciário, administrativo ou similar, salvo motivo relevante a ser comunicado por escrito à autoridade a que estiver subordinado",
+"afastar-se de qualquer lugar em que deva estar por força de dispositivo ou ordem legal",
+"permutar serviço sem permissão da autoridade competente",
+"deixar de apresentar-se à Junta Médica (ou perícia oficial) ou seguir os trâmites regulamentares e administrativos, quando de dispensa por questões de doença",
+"deixar de se apresentar às autoridades competentes nos casos de movimentação ou quando designado para comissão ou serviço extraordinário, prontidão, treinamentos, instrução, formaturas, solenidades e manobras",
+"deixar de identificar-se quando solicitado, ou quando as circunstâncias o exigirem",
+"não se apresentar ao seu superior imediato ao término de qualquer afastamento do serviço, ou ainda logo que souber que o mesmo tenha sido interrompido ou suspenso",
+"introduzir bebidas alcoólicas em local sob administração militar, salvo se devidamente autorizado",
+"ter em seu poder, introduzir ou distribuir em local sob administração militar substância ou material inflamável ou explosivo sem permissão da autoridade competente",
+"desrespeitar regras de trânsito, de tráfego aéreo ou de navegação marítima, lacustre ou fluvial",
+"autorizar, promover ou executar manobras perigosas com viaturas, aeronaves, embarcações ou animais",
+"não ter o devido zelo, por ação ou omissão, com os bens ou semoventes pertencentes ao patrimônio público ou particular, que estejam ou não sob sua responsabilidade",
+"deixar de solicitar a presença de perícia oficial quando envolver-se em ocorrência de trânsito com veículos pertencentes à Corporação Militar, bem como os cedidos ou locados para o serviço",
+"trabalhar mal, intencionalmente ou por desídia, em qualquer serviço, instrução ou missão",
+"negar-se a utilizar ou a receber do Estado fardamento, armamento, equipamento ou bens que lhe sejam destinados ou devam ficar em seu poder ou sob sua responsabilidade",
+"deixar o responsável pela segurança da Organização Militar de cumprir as prescrições regulamentares com respeito a entrada, saída e permanência de pessoa estranha",
+"permitir que pessoa não autorizada adentre prédio ou local interditado",
+"deixar, ao entrar ou sair de Organização Militar onde não sirva, de dar ciência da sua presença ao oficial ou graduado de serviço",
+"abrir ou tentar abrir qualquer dependência da Organização Militar, desde que não seja a autoridade competente ou sem sua ordem, salvo em situações de emergência",
+"permanecer em dependência de outra Organização Militar ou local de serviço sem consentimento ou ordem da autoridade competente",
+"deixar de exibir a superior hierárquico, quando por ele solicitado, objeto ou volume, ao entrar ou sair de qualquer Organização Militar",
+"apresentar-se, em qualquer situação, mal uniformizado, com o uniforme alterado ou diferente do previsto, contrariando o Regulamento de Uniformes da Corporação Militar ou norma a respeito",
+"usar no uniforme insígnia, medalha, condecoração ou distintivo não regulamentares ou de forma indevida",
+"deixar de exibir no uniforme a tarja de identificação do nome de guerra",
+"ostentar, quando uniformizado, tatuagem que atente contra a moral, os bons costumes, a dignidade da pessoa humana e às instituições democráticas",
+"exibir, a militar estadual feminina, quando uniformizada, brincos, piercings, joias ou adereços em desacordo com o disposto no Regulamento de Uniformes da Corporação Militar ou norma a respeito",
+"usar, o militar estadual masculino, quando uniformizado, brincos e piercings",
+"usar, o militar estadual masculino, quando uniformizado, adereços em desacordo com os costumes militares",
+"comparecer, uniformizado, a manifestações ou reuniões de caráter político-partidária, salvo por motivo de serviço ou quando autorizado",
+"autorizar, promover ou participar de petições ou manifestações de caráter reivindicatório, de cunho político-partidário, religioso, de crítica ou de apoio a ato de superior, para tratar de assuntos de natureza militar, ressalvados os de natureza técnica ou científica havidos em razão do exercício da função militar",
+"recorrer a outros órgãos, pessoas ou instituições, exceto ao Ministério Público e ao Poder Judiciário, para resolver assunto de interesse pessoal relacionado com a Corporação Militar, sem observar os preceitos estabelecidos neste Código",
+"deixar de cumprir as normas legais ou regulamentares, na esfera de suas atribuições",
+"ter em seu poder, introduzir ou distribuir, em local sob administração militar, publicações, estampas ou jornais que atentem contra a disciplina, a moral ou as instituições",
+"distribuir, ainda que fora de local sob administração militar, publicações, estampas ou jornais que atentem contra a disciplina, a moral ou as instituições",
+"discutir ou provocar discussão, por qualquer veículo de comunicação, sobre assuntos políticos, militares ou policiais, excetuando-se os de natureza exclusivamente técnica, quando devidamente autorizado",
+"não ter, pelo preparo próprio ou de seus subordinados ou instruendos, a dedicação imposta pelo sentimento do dever",
+"conduzir veículo, pilotar aeronave ou embarcação oficial, sem autorização, mesmo estando habilitado",
+"chegar atrasado ao expediente, ao serviço para o qual esteja escalado, convocado, designado ou a qualquer outro ato em que deva tomar parte ou assistir",
+"maltratar, permitir maus-tratos ou não ter o devido cuidado com animais"
+];
+
+const LEVES = [
+"fumar em local não permitido",
+"deixar de comunicar ao superior a execução de ordem dele recebida, no mais curto prazo possível",
+"retirar-se da presença do superior hierárquico sem obediência às normas regulamentares",
+"deixar, tão logo seus afazeres o permitam, de apresentar-se ao seu superior funcional conforme prescrições regulamentares",
+"dirigir-se diretamente ao superior hierárquico pelo nome, sem fazer menção ao posto ou graduação",
+"deixar, nas solenidades, de apresentar-se ao superior hierárquico de posto ou graduação mais elevada e de saudar os demais, de acordo com as normas regulamentares",
+"consentir, o responsável pelo posto de serviço ou a sentinela, na formação de grupo ou permanência de pessoas junto ao seu posto",
+"içar ou arriar, sem ordem, bandeira ou insígnia de autoridade",
+"dar toques ou fazer sinais previstos nos regulamentos, sem ordem de autoridade competente",
+"conversar ou fazer ruídos em ocasiões ou lugares impróprios",
+"deixar de comunicar a alteração de dados de qualificação pessoal, telefone ou mudança de endereço residencial",
+"deixar de comunicar a tempo, à autoridade competente, a impossibilidade de comparecer à Organização Militar ou a qualquer ato ou serviço de que deva participar ou a que deva assistir",
+"permanecer, alojado ou não, deitado em horário de expediente no interior da Organização Militar, sem autorização de quem de direito",
+"adentrar, sem permissão ou ordem, em lugar cuja entrada lhe seja vedada",
+"transportar na viatura, aeronave ou embarcação que esteja sob seu comando ou responsabilidade, pessoas, animais ou materiais, sem autorização da autoridade competente",
+"andar a cavalo, a trote ou galope, sem necessidade, pelas ruas da cidade, ou castigar a montada",
+"acionar desnecessariamente o rádio ou sirene de viatura militar",
+"permanecer em dependência da própria Organização Militar ou local de serviço, desde que a ele estranho, sem consentimento ou ordem da autoridade competente",
+"entrar ou sair de qualquer Organização Militar por lugares que não sejam para isso designados",
+"usar vestuário incompatível com o local ou ocasião ou descuidar do asseio próprio",
+"estar em desacordo com as normas regulamentares de apresentação pessoal",
+"permitir ou aceitar qualquer manifestação coletiva de pares e subordinados, com exceção das demonstrações de boa e sã camaradagem e com prévio conhecimento do homenageado",
+"adentrar ao quartel em trajes civis em horário de expediente sem autorização de quem de direito"
+];
+
+function toRoman(num){
+  const vals=[[1000,"M"],[900,"CM"],[500,"D"],[400,"CD"],[100,"C"],[90,"XC"],[50,"L"],[40,"XL"],[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];
+  let r="";
+  for(const [v,s] of vals){ while(num>=v){ r+=s; num-=v; } }
+  return r;
+}
+
+const PARAGRAFO_LABEL = { grave:"§1º", media:"§2º", leve:"§3º" };
+const CLASS_LABEL = { grave:"GRAVE", media:"MÉDIA", leve:"LEVE" };
+
+let BANK = [];
+(function buildBank(){
+  GRAVES.forEach((t,i)=> BANK.push({text:t, cls:"grave", inciso:toRoman(i+1)}));
+  MEDIAS.forEach((t,i)=> BANK.push({text:t, cls:"media", inciso:toRoman(i+1)}));
+  LEVES.forEach((t,i)=> BANK.push({text:t, cls:"leve", inciso:toRoman(i+1)}));
+})();
+
+/* ============================================================
+   ESTADO DO SIMULADO
+   ============================================================ */
+let queue = [];          // fila de questões (objetos do BANK, com flags)
+let totalToPlay = 30;
+let correctCount = 0;
+let wrongCount = 0;
+let attemptsTotal = 0;
+let missedSet = new Map(); // texto -> {q, timesWrong}
+let currentQ = null;
+let answered = false;
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+/* -------- TELA 1: setup -------- */
+const countChips = document.getElementById('countChips');
+const customCount = document.getElementById('customCount');
+countChips.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.chip-btn');
+  if(!btn) return;
+  [...countChips.children].forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  totalToPlay = parseInt(btn.dataset.n,10);
+  customCount.value = '';
+});
+customCount.addEventListener('input', ()=>{
+  [...countChips.children].forEach(c=>c.classList.remove('active'));
+  let v = parseInt(customCount.value,10);
+  if(v){ totalToPlay = Math.min(Math.max(v,1),161); }
+});
+
+document.getElementById('startBtn').addEventListener('click', ()=>{
+  let v = parseInt(customCount.value,10);
+  if(v){ totalToPlay = Math.min(Math.max(v,1),161); }
+  startQuiz(totalToPlay);
+});
+
+/* -------- iniciar / lógica do quiz -------- */
+function startQuiz(n){
+  const pool = shuffle(BANK).slice(0, n);
+  queue = pool.map(q=>({...q, wrongOnce:false}));
+  correctCount = 0;
+  wrongCount = 0;
+  attemptsTotal = 0;
+  missedSet = new Map();
+
+  document.getElementById('screen-setup').classList.add('hidden');
+  document.getElementById('screen-result').classList.add('hidden');
+  document.getElementById('screen-quiz').classList.remove('hidden');
+
+  nextQuestion();
+}
+
+function updateHUD(){
+  document.getElementById('scoreOkLabel').textContent = `✔ ${correctCount} acertos`;
+  document.getElementById('scoreBadLabel').textContent = `✘ ${wrongCount} erros`;
+  const remaining = queue.length;
+  document.getElementById('remainingLabel').textContent = `${remaining} restante${remaining===1?'':'s'}`;
+  const totalUnits = totalToPlay + [...missedSet.values()].reduce((s,v)=>s+ (v.timesWrong),0);
+  const done = attemptsTotal;
+  const pct = totalUnits>0 ? Math.min(100, Math.round((done/(done+remaining))*100)) : 0;
+  document.getElementById('progressFill').style.width = (isFinite(pct)?pct:0) + '%';
+}
+
+function nextQuestion(){
+  answered = false;
+  document.getElementById('nextBtn').classList.add('hidden');
+  document.getElementById('feedbackZone').innerHTML = '';
+  const opts = document.querySelectorAll('.opt-btn');
+  opts.forEach(o=>{
+    o.disabled = false;
+    o.classList.remove('correct-pick','wrong-pick','reveal-correct');
+  });
+
+  if(queue.length === 0){
+    showResults();
+    return;
+  }
+  currentQ = queue.shift();
+  document.getElementById('progLabel').textContent = `Tentativa ${attemptsTotal+1}`;
+  document.getElementById('questionText').textContent = capitalize(currentQ.text);
+  updateHUD();
+}
+
+function capitalize(s){
+  return s.charAt(0).toUpperCase() + s.slice(1) + '.';
+}
+
+document.getElementById('optionsWrap').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.opt-btn');
+  if(!btn || answered) return;
+  answered = true;
+  attemptsTotal++;
+
+  const picked = btn.dataset.val;
+  const isCorrect = picked === currentQ.cls;
+  const opts = document.querySelectorAll('.opt-btn');
+  opts.forEach(o=>o.disabled = true);
+
+  if(isCorrect){
+    correctCount++;
+    btn.classList.add('correct-pick');
+    renderFeedback(true);
+  } else {
+    wrongCount++;
+    btn.classList.add('wrong-pick');
+    const correctBtn = [...opts].find(o=>o.dataset.val === currentQ.cls);
+    if(correctBtn) correctBtn.classList.add('reveal-correct');
+    renderFeedback(false);
+
+    // registra no histórico de erros
+    const key = currentQ.text;
+    if(!missedSet.has(key)) missedSet.set(key, {q: currentQ, timesWrong:0});
+    missedSet.get(key).timesWrong++;
+
+    // reinsere a questão mais adiante na fila para reforçar a memorização
+    const reinsertAt = Math.min(queue.length, 3 + Math.floor(Math.random()*4));
+    queue.splice(reinsertAt, 0, {...currentQ});
+  }
+
+  document.getElementById('nextBtn').classList.remove('hidden');
+  updateHUD();
+});
+
+function renderFeedback(isCorrect){
+  const zone = document.getElementById('feedbackZone');
+  const label = CLASS_LABEL[currentQ.cls];
+  const paragrafo = PARAGRAFO_LABEL[currentQ.cls];
+  if(isCorrect){
+    zone.innerHTML = `
+      <div class="stamp ok">Correto</div>
+      <div class="explain correctbox">Essa conduta está prevista no <b>inciso ${currentQ.inciso} do ${paragrafo} do Art. 18</b>, que trata das transgressões disciplinares <b>${label}S</b>. Você acertou!</div>
+    `;
+  } else {
+    zone.innerHTML = `
+      <div class="stamp bad">Errado</div>
+      <div class="explain">A classificação correta é <b>${label}</b>. Essa conduta está prevista no <b>inciso ${currentQ.inciso} do ${paragrafo} do Art. 18</b>, que lista as transgressões disciplinares <b>${label.toLowerCase()}s</b>. Guarde bem essa: ela vai reaparecer daqui a pouco no simulado para você fixar.</div>
+      <div class="review-note">↻ Essa questão voltará a ser cobrada mais adiante nesta rodada.</div>
+    `;
+  }
+}
+
+document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+
+/* -------- TELA 3: resultado -------- */
+function showResults(){
+  document.getElementById('screen-quiz').classList.add('hidden');
+  document.getElementById('screen-result').classList.remove('hidden');
+
+  const pct = attemptsTotal>0 ? Math.round((correctCount/attemptsTotal)*100) : 0;
+  document.getElementById('finalPct').textContent = pct + '%';
+  document.getElementById('statCorrect').textContent = correctCount;
+  document.getElementById('statWrong').textContent = wrongCount;
+  document.getElementById('statQuestions').textContent = totalToPlay;
+  document.getElementById('statAttempts').textContent = attemptsTotal;
+
+  const listEl = document.getElementById('missedList');
+  listEl.innerHTML = '';
+  if(missedSet.size === 0){
+    document.getElementById('missedSection').classList.add('hidden');
+  } else {
+    document.getElementById('missedSection').classList.remove('hidden');
+    [...missedSet.values()].forEach(({q,timesWrong})=>{
+      const div = document.createElement('div');
+      div.className = 'missed-item';
+      div.innerHTML = `${capitalize(q.text)} <span class="tag ${q.cls}">${CLASS_LABEL[q.cls]}</span> <span style="color:var(--slate);font-family:'JetBrains Mono',monospace;font-size:11px;">— errada ${timesWrong}x</span>`;
+      listEl.appendChild(div);
+    });
+  }
+}
+
+document.getElementById('restartBtn').addEventListener('click', ()=>{
+  document.getElementById('screen-result').classList.add('hidden');
+  document.getElementById('screen-setup').classList.remove('hidden');
+});
+
+document.getElementById('reviewAgainBtn').addEventListener('click', ()=>{
+  if(missedSet.size === 0){ return; }
+  const pool = shuffle([...missedSet.values()].map(v=>v.q));
+  totalToPlay = pool.length;
+  queue = pool.map(q=>({...q}));
+  correctCount = 0; wrongCount = 0; attemptsTotal = 0; missedSet = new Map();
+  document.getElementById('screen-result').classList.add('hidden');
+  document.getElementById('screen-quiz').classList.remove('hidden');
+  nextQuestion();
+});
+</script>
+</body>
+</html>
