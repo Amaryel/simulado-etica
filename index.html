@@ -410,12 +410,97 @@
     letter-spacing:0.5px;
   }
   .hidden{display:none !important;}
+
+  /* ---- auth screens ---- */
+  .tab-row{display:flex;gap:8px;margin-bottom:20px;}
+  .tab-btn{
+    flex:1;
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-size:13px;
+    padding:10px;
+    background:var(--navy-950);
+    border:1px solid var(--navy-600);
+    color:var(--paper-dim);
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .tab-btn.active{border-color:var(--brass);color:var(--brass-bright);}
+  .form-field{margin-bottom:14px;}
+  .form-field label{
+    display:block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin-bottom:6px;
+  }
+  .form-field input{
+    width:100%;
+    background:var(--navy-950);
+    border:1px solid var(--navy-600);
+    color:var(--paper);
+    font-family:'PT Serif',serif;
+    font-size:15px;
+    padding:11px 12px;
+    border-radius:3px;
+  }
+  .form-field input:focus{outline:2px solid var(--brass);outline-offset:1px;}
+  .auth-msg{
+    font-size:14px;
+    padding:10px 12px;
+    border-radius:3px;
+    margin-top:14px;
+    display:none;
+  }
+  .auth-msg.show{display:block;}
+  .auth-msg.err{background:rgba(139,38,53,0.18);border:1px solid var(--grave-bright);color:var(--grave-bright);}
+  .auth-msg.ok{background:rgba(63,107,79,0.18);border:1px solid var(--ok-bright);color:var(--ok-bright);}
+  .pending-icon{
+    font-family:'Oswald',sans-serif;
+    font-size:44px;
+    text-align:center;
+    color:var(--media-bright);
+    margin-bottom:6px;
+  }
+  .pay-box{
+    background:var(--navy-950);
+    border:1px solid var(--navy-600);
+    border-radius:4px;
+    padding:16px 18px;
+    margin-top:18px;
+    font-size:14.5px;
+    color:var(--paper-dim);
+  }
+  .userbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--slate);
+    margin-top:14px;
+  }
+  .userbar button{
+    background:none;
+    border:none;
+    color:var(--slate);
+    text-decoration:underline;
+    cursor:pointer;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+  }
+  .userbar button:hover{color:var(--brass-bright);}
+
   @media (max-width:480px){
     .wrap{padding:24px 14px 48px;}
     .card{padding:20px 16px;}
     .stat-grid{grid-template-columns:1fr;}
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <div class="stripe"></div>
@@ -430,8 +515,50 @@
   </header>
   <p class="sub">Treine a classificação das transgressões disciplinares em <b>graves</b>, <b>médias</b> e <b>leves</b>, com base no Art. 18 do Código de Ética e Disciplina Militar. Sempre que você errar, a explicação aparece na hora &mdash; e a questão volta a ser cobrada mais adiante, para fixar o conteúdo.</p>
 
+  <!-- ===================== TELA 0: LOGIN / CADASTRO ===================== -->
+  <section id="screen-auth" class="card">
+    <div class="tab-row">
+      <button class="tab-btn active" id="tabLogin">Entrar</button>
+      <button class="tab-btn" id="tabSignup">Criar conta</button>
+    </div>
+
+    <div class="form-field">
+      <label for="authEmail">E-mail</label>
+      <input type="email" id="authEmail" autocomplete="email" placeholder="voce@email.com">
+    </div>
+    <div class="form-field">
+      <label for="authPass">Senha</label>
+      <input type="password" id="authPass" autocomplete="current-password" placeholder="mínimo 6 caracteres">
+    </div>
+
+    <button class="btn-primary" id="authSubmitBtn">Entrar</button>
+    <div class="auth-msg" id="authMsg"></div>
+  </section>
+
+  <!-- ===================== TELA 0.5: AGUARDANDO PAGAMENTO ===================== -->
+  <section id="screen-pending" class="card hidden">
+    <div class="pending-icon">⏳</div>
+    <h1 style="text-align:center;font-size:22px;">Acesso ainda não liberado</h1>
+    <p class="sub" style="text-align:center;margin:10px auto 0;">Sua conta foi criada, mas o pagamento ainda não foi confirmado no nosso sistema.</p>
+    <div class="pay-box">
+      <b style="color:var(--paper)">Como liberar o acesso:</b><br>
+      1. Faça o pagamento pela chave Pix / link informado na compra.<br>
+      2. Envie o comprovante para o WhatsApp/contato informado na compra.<br>
+      3. Assim que confirmarmos, seu acesso é liberado automaticamente aqui.
+    </div>
+    <button class="btn-primary" id="checkAgainBtn">Já paguei, verificar novamente</button>
+    <div class="userbar">
+      <span id="pendingEmailLabel"></span>
+      <button id="logoutBtnPending">Sair</button>
+    </div>
+  </section>
+
   <!-- ===================== TELA 1: CONFIGURAÇÃO ===================== -->
-  <section id="screen-setup" class="card">
+  <section id="screen-setup" class="card hidden">
+    <div class="userbar" style="margin-bottom:16px;margin-top:0;">
+      <span id="setupEmailLabel"></span>
+      <button id="logoutBtnSetup">Sair</button>
+    </div>
     <span class="field-label">Quantas questões você quer responder?</span>
     <div class="count-row" id="countChips">
       <button class="chip-btn" data-n="10">10</button>
@@ -500,6 +627,137 @@
 </div>
 
 <script>
+/* ============================================================
+   AUTENTICAÇÃO — Supabase (login, cadastro e controle de pagamento)
+   ============================================================ */
+
+// >>> SUBSTITUA pelos valores do seu projeto (Project Settings → API) <<<
+const SUPABASE_URL = "https://tczzkfxnmpzpuqqklykw.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_rYC-4Uan1LVPPue8v7Ce0w_0I5wnIdx";
+
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let authMode = 'login'; // 'login' | 'signup'
+let currentUser = null;
+
+const els = {
+  screenAuth: document.getElementById('screen-auth'),
+  screenPending: document.getElementById('screen-pending'),
+  screenSetup: document.getElementById('screen-setup'),
+  screenQuiz: document.getElementById('screen-quiz'),
+  screenResult: document.getElementById('screen-result'),
+  tabLogin: document.getElementById('tabLogin'),
+  tabSignup: document.getElementById('tabSignup'),
+  authEmail: document.getElementById('authEmail'),
+  authPass: document.getElementById('authPass'),
+  authSubmitBtn: document.getElementById('authSubmitBtn'),
+  authMsg: document.getElementById('authMsg'),
+  pendingEmailLabel: document.getElementById('pendingEmailLabel'),
+  setupEmailLabel: document.getElementById('setupEmailLabel'),
+};
+
+function hideAllScreens(){
+  [els.screenAuth, els.screenPending, els.screenSetup, els.screenQuiz, els.screenResult]
+    .forEach(s => s.classList.add('hidden'));
+}
+
+function showAuthMsg(text, type){
+  els.authMsg.textContent = text;
+  els.authMsg.className = 'auth-msg show ' + type;
+}
+
+els.tabLogin.addEventListener('click', () => {
+  authMode = 'login';
+  els.tabLogin.classList.add('active');
+  els.tabSignup.classList.remove('active');
+  els.authSubmitBtn.textContent = 'Entrar';
+  els.authMsg.className = 'auth-msg';
+});
+els.tabSignup.addEventListener('click', () => {
+  authMode = 'signup';
+  els.tabSignup.classList.add('active');
+  els.tabLogin.classList.remove('active');
+  els.authSubmitBtn.textContent = 'Criar conta';
+  els.authMsg.className = 'auth-msg';
+});
+
+els.authSubmitBtn.addEventListener('click', async () => {
+  const email = els.authEmail.value.trim();
+  const password = els.authPass.value;
+  if(!email || !password){
+    showAuthMsg('Preencha e-mail e senha.', 'err');
+    return;
+  }
+  els.authSubmitBtn.disabled = true;
+
+  if(authMode === 'signup'){
+    const { data, error } = await supabaseClient.auth.signUp({ email, password });
+    if(error){
+      showAuthMsg(error.message, 'err');
+      els.authSubmitBtn.disabled = false;
+      return;
+    }
+    showAuthMsg('Conta criada! Verificando acesso...', 'ok');
+  } else {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if(error){
+      showAuthMsg('E-mail ou senha inválidos.', 'err');
+      els.authSubmitBtn.disabled = false;
+      return;
+    }
+  }
+  els.authSubmitBtn.disabled = false;
+  await checkSessionAndRoute();
+});
+
+async function checkAccess(user){
+  const { data, error } = await supabaseClient
+    .from('access')
+    .select('paid')
+    .eq('id', user.id)
+    .single();
+  if(error){
+    console.error(error);
+    return false;
+  }
+  return !!(data && data.paid);
+}
+
+async function checkSessionAndRoute(){
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if(!session){
+    hideAllScreens();
+    els.screenAuth.classList.remove('hidden');
+    return;
+  }
+  currentUser = session.user;
+  const paid = await checkAccess(currentUser);
+  hideAllScreens();
+  if(paid){
+    els.setupEmailLabel.textContent = currentUser.email;
+    els.screenSetup.classList.remove('hidden');
+  } else {
+    els.pendingEmailLabel.textContent = currentUser.email;
+    els.screenPending.classList.remove('hidden');
+  }
+}
+
+async function doLogout(){
+  await supabaseClient.auth.signOut();
+  currentUser = null;
+  hideAllScreens();
+  els.screenAuth.classList.remove('hidden');
+  els.authEmail.value = '';
+  els.authPass.value = '';
+}
+
+document.getElementById('logoutBtnPending').addEventListener('click', doLogout);
+document.getElementById('logoutBtnSetup').addEventListener('click', doLogout);
+document.getElementById('checkAgainBtn').addEventListener('click', checkSessionAndRoute);
+
+// roda assim que a página carrega
+checkSessionAndRoute();
+
 /* ============================================================
    BANCO DE DADOS — extraído do Art. 18, §§1º, 2º e 3º
    ============================================================ */
