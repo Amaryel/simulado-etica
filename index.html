@@ -533,6 +533,37 @@
 
     <button class="btn-primary" id="authSubmitBtn">Entrar</button>
     <div class="auth-msg" id="authMsg"></div>
+
+    <p class="hint" style="text-align:center;margin-top:16px;">
+      <a href="#" id="forgotPassLink" style="color:var(--brass-bright);text-decoration:underline;">Esqueci minha senha</a>
+      &nbsp;&middot;&nbsp;
+      Suporte: <a href="mailto:amaryelcc@gmail.com" style="color:var(--paper-dim);">amaryelcc@gmail.com</a>
+    </p>
+  </section>
+
+  <!-- ===================== TELA 0.2: ESQUECI MINHA SENHA ===================== -->
+  <section id="screen-forgot" class="card hidden">
+    <span class="field-label">Recuperar senha</span>
+    <p class="sub" style="margin-top:6px;">Digite o e-mail usado no cadastro. Vamos te enviar um link para criar uma nova senha.</p>
+    <div class="form-field" style="margin-top:16px;">
+      <label for="forgotEmail">E-mail</label>
+      <input type="email" id="forgotEmail" autocomplete="email" placeholder="voce@email.com">
+    </div>
+    <button class="btn-primary" id="forgotSubmitBtn">Enviar link de recuperação</button>
+    <div class="auth-msg" id="forgotMsg"></div>
+    <button class="btn-ghost" id="backToLoginBtn">Voltar para o login</button>
+  </section>
+
+  <!-- ===================== TELA 0.3: DEFINIR NOVA SENHA ===================== -->
+  <section id="screen-reset" class="card hidden">
+    <span class="field-label">Criar nova senha</span>
+    <p class="sub" style="margin-top:6px;">Digite a nova senha que você vai usar a partir de agora.</p>
+    <div class="form-field" style="margin-top:16px;">
+      <label for="resetPass">Nova senha</label>
+      <input type="password" id="resetPass" autocomplete="new-password" placeholder="mínimo 6 caracteres">
+    </div>
+    <button class="btn-primary" id="resetSubmitBtn">Salvar nova senha</button>
+    <div class="auth-msg" id="resetMsg"></div>
   </section>
 
   <!-- ===================== TELA 0.5: AGUARDANDO PAGAMENTO ===================== -->
@@ -542,15 +573,16 @@
     <p class="sub" style="text-align:center;margin:10px auto 0;">Sua conta foi criada, mas o pagamento ainda não foi confirmado no nosso sistema.</p>
     <div class="pay-box">
       <b style="color:var(--paper)">Como liberar o acesso:</b><br>
-      1. Faça o pagamento pela chave Pix / link informado na compra.<br>
-      2. Envie o comprovante para o WhatsApp/contato informado na compra.<br>
-      3. Assim que confirmarmos, seu acesso é liberado automaticamente aqui.
+      1. Faça o Pix para a chave: <b style="color:var(--brass-bright)">amaryelcc@gmail.com</b> (Nubank).<br>
+      2. Envie o comprovante, junto com o e-mail que você usou aqui no cadastro, para <b style="color:var(--brass-bright)">amaryelcc@gmail.com</b>.<br>
+      3. Assim que confirmarmos, seu acesso é liberado &mdash; volte aqui e clique em "Já paguei, verificar novamente".
     </div>
     <button class="btn-primary" id="checkAgainBtn">Já paguei, verificar novamente</button>
     <div class="userbar">
       <span id="pendingEmailLabel"></span>
       <button id="logoutBtnPending">Sair</button>
     </div>
+    <p class="hint" style="text-align:center;margin-top:18px;">Problema com o acesso? Fale com o suporte: <b style="color:var(--paper-dim)">amaryelcc@gmail.com</b></p>
   </section>
 
   <!-- ===================== TELA 1: CONFIGURAÇÃO ===================== -->
@@ -646,6 +678,8 @@ const els = {
   screenSetup: document.getElementById('screen-setup'),
   screenQuiz: document.getElementById('screen-quiz'),
   screenResult: document.getElementById('screen-result'),
+  screenForgot: document.getElementById('screen-forgot'),
+  screenReset: document.getElementById('screen-reset'),
   tabLogin: document.getElementById('tabLogin'),
   tabSignup: document.getElementById('tabSignup'),
   authEmail: document.getElementById('authEmail'),
@@ -654,10 +688,16 @@ const els = {
   authMsg: document.getElementById('authMsg'),
   pendingEmailLabel: document.getElementById('pendingEmailLabel'),
   setupEmailLabel: document.getElementById('setupEmailLabel'),
+  forgotEmail: document.getElementById('forgotEmail'),
+  forgotSubmitBtn: document.getElementById('forgotSubmitBtn'),
+  forgotMsg: document.getElementById('forgotMsg'),
+  resetPass: document.getElementById('resetPass'),
+  resetSubmitBtn: document.getElementById('resetSubmitBtn'),
+  resetMsg: document.getElementById('resetMsg'),
 };
 
 function hideAllScreens(){
-  [els.screenAuth, els.screenPending, els.screenSetup, els.screenQuiz, els.screenResult]
+  [els.screenAuth, els.screenPending, els.screenSetup, els.screenQuiz, els.screenResult, els.screenForgot, els.screenReset]
     .forEach(s => s.classList.add('hidden'));
 }
 
@@ -755,8 +795,81 @@ document.getElementById('logoutBtnPending').addEventListener('click', doLogout);
 document.getElementById('logoutBtnSetup').addEventListener('click', doLogout);
 document.getElementById('checkAgainBtn').addEventListener('click', checkSessionAndRoute);
 
-// roda assim que a página carrega
-checkSessionAndRoute();
+/* ---- esqueci minha senha ---- */
+function showForgotMsg(text, type){
+  els.forgotMsg.textContent = text;
+  els.forgotMsg.className = 'auth-msg show ' + type;
+}
+function showResetMsg(text, type){
+  els.resetMsg.textContent = text;
+  els.resetMsg.className = 'auth-msg show ' + type;
+}
+
+document.getElementById('forgotPassLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  hideAllScreens();
+  els.forgotEmail.value = els.authEmail.value || '';
+  els.forgotMsg.className = 'auth-msg';
+  els.screenForgot.classList.remove('hidden');
+});
+
+document.getElementById('backToLoginBtn').addEventListener('click', () => {
+  hideAllScreens();
+  els.screenAuth.classList.remove('hidden');
+});
+
+els.forgotSubmitBtn.addEventListener('click', async () => {
+  const email = els.forgotEmail.value.trim();
+  if(!email){
+    showForgotMsg('Digite seu e-mail.', 'err');
+    return;
+  }
+  els.forgotSubmitBtn.disabled = true;
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + window.location.pathname
+  });
+  els.forgotSubmitBtn.disabled = false;
+  if(error){
+    showForgotMsg(error.message, 'err');
+    return;
+  }
+  showForgotMsg('Link enviado! Verifique seu e-mail (e a caixa de spam) e clique no link para criar uma nova senha.', 'ok');
+});
+
+els.resetSubmitBtn.addEventListener('click', async () => {
+  const newPass = els.resetPass.value;
+  if(!newPass || newPass.length < 6){
+    showResetMsg('A senha precisa ter pelo menos 6 caracteres.', 'err');
+    return;
+  }
+  els.resetSubmitBtn.disabled = true;
+  const { error } = await supabaseClient.auth.updateUser({ password: newPass });
+  els.resetSubmitBtn.disabled = false;
+  if(error){
+    showResetMsg(error.message, 'err');
+    return;
+  }
+  showResetMsg('Senha atualizada com sucesso! Redirecionando...', 'ok');
+  window.history.replaceState({}, document.title, window.location.pathname);
+  setTimeout(checkSessionAndRoute, 1200);
+});
+
+// escuta o link de recuperação de senha vindo por e-mail
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if(event === 'PASSWORD_RECOVERY'){
+    hideAllScreens();
+    els.resetPass.value = '';
+    els.resetMsg.className = 'auth-msg';
+    els.screenReset.classList.remove('hidden');
+  }
+});
+
+// roda assim que a página carrega — mas se veio de um link de recuperação de senha,
+// espera o evento PASSWORD_RECOVERY acima em vez de rotear direto
+const isRecoveryLink = window.location.hash.includes('type=recovery') || window.location.search.includes('type=recovery');
+if(!isRecoveryLink){
+  checkSessionAndRoute();
+}
 
 /* ============================================================
    BANCO DE DADOS — extraído do Art. 18, §§1º, 2º e 3º
