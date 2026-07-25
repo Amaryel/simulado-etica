@@ -27,8 +27,32 @@
     --ok:#3f6b4f;
     --ok-bright:#5c9270;
   }
+  html[data-theme="light"]{
+    --navy-950:#f3f0e6;
+    --navy-900:#ffffff;
+    --navy-800:#ffffff;
+    --navy-700:#ece7d8;
+    --navy-600:#d6cfba;
+    --brass:#a5791a;
+    --brass-bright:#8a6413;
+    --paper:#241f14;
+    --paper-dim:#4d4736;
+    --slate:#746c58;
+    --grave:#8b2635;
+    --grave-bright:#a52338;
+    --media:#a67a1e;
+    --media-bright:#8a640f;
+    --leve:#3f6b4f;
+    --leve-bright:#356047;
+    --ok:#3f6b4f;
+    --ok-bright:#356047;
+  }
   *{box-sizing:border-box;}
+  html{font-size:16px;}
   html,body{margin:0;padding:0;}
+  body,.card,.opt-btn,.chip-btn,.stat-box,.progress-panel,.resume-banner,.modal-card{
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
   body{
     background:
       radial-gradient(1200px 600px at 15% -10%, rgba(201,162,39,0.08), transparent 60%),
@@ -53,9 +77,45 @@
   header.top{
     display:flex;
     align-items:center;
+    flex-wrap:wrap;
     gap:14px;
     margin-bottom:8px;
   }
+  .a11y-controls{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex:0 0 auto;
+  }
+  .font-controls{
+    display:flex;
+    border:1px solid var(--navy-600);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .font-controls button{
+    background:var(--navy-800);
+    color:var(--paper-dim);
+    border:none;
+    width:32px;
+    height:32px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.8125rem;
+    cursor:pointer;
+  }
+  .font-controls button:first-child{border-right:1px solid var(--navy-600);}
+  .font-controls button:hover{background:var(--navy-700);color:var(--brass-bright);}
+  .theme-toggle{
+    width:32px;height:32px;
+    border:1px solid var(--navy-600);
+    border-radius:4px;
+    background:var(--navy-800);
+    cursor:pointer;
+    font-size:1rem;
+    display:flex;align-items:center;justify-content:center;
+    line-height:1;
+  }
+  .theme-toggle:hover{border-color:var(--brass);}
   .badge{
     width:46px;height:46px;flex:0 0 auto;
     border:2px solid var(--brass);
@@ -63,14 +123,14 @@
     display:flex;align-items:center;justify-content:center;
     font-family:'Oswald',sans-serif;
     font-weight:700;
-    font-size:15px;
+    font-size:0.9375rem;
     color:var(--brass-bright);
     letter-spacing:0.5px;
     background:radial-gradient(circle at 35% 30%, rgba(201,162,39,0.18), transparent 70%);
   }
   .eyebrow{
     font-family:'JetBrains Mono',monospace;
-    font-size:11px;
+    font-size:0.6875rem;
     letter-spacing:2.5px;
     text-transform:uppercase;
     color:var(--slate);
@@ -86,7 +146,7 @@
   }
   .sub{
     color:var(--paper-dim);
-    font-size:16px;
+    font-size:1rem;
     margin-top:10px;
     max-width:60ch;
   }
@@ -111,7 +171,7 @@
     font-family:'Oswald',sans-serif;
     text-transform:uppercase;
     letter-spacing:1.5px;
-    font-size:13px;
+    font-size:0.8125rem;
     color:var(--brass-bright);
     margin-bottom:10px;
     display:block;
@@ -124,7 +184,7 @@
   }
   .chip-btn{
     font-family:'Oswald',sans-serif;
-    font-size:15px;
+    font-size:0.9375rem;
     letter-spacing:0.5px;
     padding:10px 18px;
     border-radius:3px;
@@ -153,18 +213,18 @@
     border:1px solid var(--navy-600);
     color:var(--paper);
     font-family:'JetBrains Mono',monospace;
-    font-size:16px;
+    font-size:1rem;
     padding:9px 10px;
     border-radius:3px;
   }
   input[type=number]:focus{outline:2px solid var(--brass);outline-offset:1px;}
-  .hint{color:var(--slate);font-size:13px;margin-top:14px;}
+  .hint{color:var(--slate);font-size:0.8125rem;margin-top:14px;}
   .btn-primary{
     font-family:'Oswald',sans-serif;
     text-transform:uppercase;
     letter-spacing:1.5px;
     font-weight:600;
-    font-size:15px;
+    font-size:0.9375rem;
     padding:14px 26px;
     background:var(--brass);
     color:var(--navy-950);
@@ -182,7 +242,7 @@
     text-transform:uppercase;
     letter-spacing:1.5px;
     font-weight:600;
-    font-size:14px;
+    font-size:0.875rem;
     padding:12px 20px;
     background:transparent;
     color:var(--paper);
@@ -200,7 +260,7 @@
     align-items:center;
     justify-content:space-between;
     font-family:'JetBrains Mono',monospace;
-    font-size:12px;
+    font-size:0.75rem;
     color:var(--slate);
     margin-bottom:10px;
     letter-spacing:0.5px;
@@ -223,20 +283,20 @@
     display:flex;
     gap:18px;
     font-family:'JetBrains Mono',monospace;
-    font-size:13px;
+    font-size:0.8125rem;
     margin-bottom:6px;
   }
   .score-ok{color:var(--ok-bright);}
   .score-bad{color:var(--grave-bright);}
   .question-num{
     font-family:'Oswald',sans-serif;
-    font-size:13px;
+    font-size:0.8125rem;
     letter-spacing:2px;
     color:var(--brass-bright);
     text-transform:uppercase;
   }
   .question-text{
-    font-size:19px;
+    font-size:1.1875rem;
     line-height:1.55;
     margin:14px 0 24px;
     color:var(--paper);
@@ -244,7 +304,7 @@
   .question-text .art-ref{
     display:block;
     font-family:'JetBrains Mono',monospace;
-    font-size:11.5px;
+    font-size:0.7188rem;
     color:var(--slate);
     margin-top:10px;
     letter-spacing:0.5px;
@@ -260,7 +320,7 @@
     gap:12px;
     text-align:left;
     font-family:'Oswald',sans-serif;
-    font-size:16px;
+    font-size:1rem;
     letter-spacing:0.5px;
     padding:15px 18px;
     border-radius:3px;
@@ -301,7 +361,7 @@
     font-weight:700;
     text-transform:uppercase;
     letter-spacing:3px;
-    font-size:26px;
+    font-size:1.625rem;
     display:inline-block;
     padding:10px 22px;
     border:4px double;
@@ -323,7 +383,7 @@
     border-left:3px solid var(--grave-bright);
     padding:16px 18px;
     border-radius:3px;
-    font-size:15px;
+    font-size:0.9375rem;
     color:var(--paper-dim);
     margin-top:14px;
     line-height:1.6;
@@ -332,7 +392,7 @@
   .explain.correctbox{border-left-color:var(--ok-bright);}
   .review-note{
     font-family:'JetBrains Mono',monospace;
-    font-size:12px;
+    font-size:0.75rem;
     color:var(--media-bright);
     margin-top:10px;
   }
@@ -341,7 +401,7 @@
   .big-score{
     font-family:'Oswald',sans-serif;
     font-weight:700;
-    font-size:64px;
+    font-size:4rem;
     letter-spacing:1px;
     text-align:center;
     color:var(--brass-bright);
@@ -350,7 +410,7 @@
   .big-score-sub{
     text-align:center;
     font-family:'JetBrains Mono',monospace;
-    font-size:13px;
+    font-size:0.8125rem;
     color:var(--slate);
     letter-spacing:1.5px;
     text-transform:uppercase;
@@ -368,8 +428,8 @@
     text-align:center;
     background:var(--navy-950);
   }
-  .stat-box .n{font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;}
-  .stat-box .l{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate);letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
+  .stat-box .n{font-family:'Oswald',sans-serif;font-size:1.75rem;font-weight:700;}
+  .stat-box .l{font-family:'JetBrains Mono',monospace;font-size:0.6875rem;color:var(--slate);letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
   .missed-list{
     margin-top:26px;
     display:flex;
@@ -384,14 +444,14 @@
     border-left:3px solid var(--grave-bright);
     border-radius:3px;
     padding:12px 14px;
-    font-size:14px;
+    font-size:0.875rem;
     color:var(--paper-dim);
   }
   .missed-item b{color:var(--paper);}
   .tag{
     display:inline-block;
     font-family:'JetBrains Mono',monospace;
-    font-size:10.5px;
+    font-size:0.6562rem;
     letter-spacing:1px;
     text-transform:uppercase;
     padding:2px 8px;
@@ -405,7 +465,7 @@
     text-align:center;
     color:var(--slate);
     font-family:'JetBrains Mono',monospace;
-    font-size:11.5px;
+    font-size:0.7188rem;
     margin-top:40px;
     letter-spacing:0.5px;
   }
@@ -418,7 +478,7 @@
     font-family:'Oswald',sans-serif;
     text-transform:uppercase;
     letter-spacing:1px;
-    font-size:13px;
+    font-size:0.8125rem;
     padding:10px;
     background:var(--navy-950);
     border:1px solid var(--navy-600);
@@ -431,7 +491,7 @@
   .form-field label{
     display:block;
     font-family:'JetBrains Mono',monospace;
-    font-size:11px;
+    font-size:0.6875rem;
     letter-spacing:1px;
     text-transform:uppercase;
     color:var(--slate);
@@ -443,13 +503,13 @@
     border:1px solid var(--navy-600);
     color:var(--paper);
     font-family:'PT Serif',serif;
-    font-size:15px;
+    font-size:0.9375rem;
     padding:11px 12px;
     border-radius:3px;
   }
   .form-field input:focus{outline:2px solid var(--brass);outline-offset:1px;}
   .auth-msg{
-    font-size:14px;
+    font-size:0.875rem;
     padding:10px 12px;
     border-radius:3px;
     margin-top:14px;
@@ -460,7 +520,7 @@
   .auth-msg.ok{background:rgba(63,107,79,0.18);border:1px solid var(--ok-bright);color:var(--ok-bright);}
   .pending-icon{
     font-family:'Oswald',sans-serif;
-    font-size:44px;
+    font-size:2.75rem;
     text-align:center;
     color:var(--media-bright);
     margin-bottom:6px;
@@ -471,7 +531,7 @@
     border-radius:4px;
     padding:16px 18px;
     margin-top:18px;
-    font-size:14.5px;
+    font-size:0.9062rem;
     color:var(--paper-dim);
   }
   .userbar{
@@ -479,7 +539,7 @@
     justify-content:space-between;
     align-items:center;
     font-family:'JetBrains Mono',monospace;
-    font-size:12px;
+    font-size:0.75rem;
     color:var(--slate);
     margin-top:14px;
   }
@@ -490,9 +550,212 @@
     text-decoration:underline;
     cursor:pointer;
     font-family:'JetBrains Mono',monospace;
-    font-size:12px;
+    font-size:0.75rem;
   }
   .userbar button:hover{color:var(--brass-bright);}
+
+  /* ---- welcome / progress ---- */
+  .welcome-line{
+    font-family:'Oswald',sans-serif;
+    font-size:0.9375rem;
+    color:var(--paper);
+    margin-bottom:2px;
+  }
+  .welcome-line b{color:var(--brass-bright);}
+  .progress-panel{
+    border:1px solid var(--navy-600);
+    border-radius:4px;
+    padding:16px 18px;
+    margin-bottom:22px;
+    background:var(--navy-950);
+  }
+  .progress-panel-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:12px;
+  }
+  .progress-avg{
+    font-family:'Oswald',sans-serif;
+    font-size:1.375rem;
+    font-weight:700;
+    color:var(--brass-bright);
+  }
+  .sparkline{
+    display:flex;
+    align-items:flex-end;
+    gap:5px;
+    height:52px;
+    margin-bottom:10px;
+  }
+  .spark-bar{
+    flex:1;
+    min-width:6px;
+    border-radius:2px 2px 0 0;
+    background:var(--leve-bright);
+    position:relative;
+  }
+  .spark-bar.mid{background:var(--media-bright);}
+  .spark-bar.low{background:var(--grave-bright);}
+  .spark-bar.abandoned{opacity:0.45;background:repeating-linear-gradient(45deg, var(--slate) 0 4px, transparent 4px 8px);}
+  .attempt-row{
+    display:flex;
+    justify-content:space-between;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    color:var(--paper-dim);
+    padding:5px 0;
+    border-top:1px solid var(--navy-700);
+  }
+  .attempt-row:first-of-type{border-top:none;}
+  .attempt-row .abandoned-tag{color:var(--media-bright);}
+  .no-progress{
+    font-size:0.8438rem;
+    color:var(--slate);
+    text-align:center;
+    padding:8px 0;
+  }
+
+  /* ---- resume banner ---- */
+  .resume-banner{
+    border:1.5px solid var(--brass);
+    border-radius:4px;
+    padding:16px 18px;
+    margin-bottom:22px;
+    background:rgba(201,162,39,0.07);
+  }
+  .resume-banner .title{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-size:0.8125rem;
+    color:var(--brass-bright);
+    margin-bottom:6px;
+  }
+  .resume-btns{display:flex;gap:10px;margin-top:12px;}
+  .resume-btns button{flex:1;margin-top:0;padding:11px;font-size:0.8125rem;}
+
+  /* ---- desistir ---- */
+  .quit-link{
+    display:block;
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    color:var(--slate);
+    text-decoration:underline;
+    background:none;
+    border:none;
+    cursor:pointer;
+    margin:18px auto 0;
+  }
+  .quit-link:hover{color:var(--grave-bright);}
+
+  /* ---- feedback modal ---- */
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(4,8,14,0.72);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+  }
+  .modal-overlay.hidden{display:none;}
+  .modal-card{
+    background:linear-gradient(180deg, var(--navy-800), var(--navy-900));
+    border:1px solid var(--navy-600);
+    border-radius:6px;
+    padding:26px 24px;
+    max-width:380px;
+    width:100%;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.7);
+  }
+  .star-row{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    margin:16px 0;
+  }
+  .star-btn{
+    font-size:1.875rem;
+    background:none;
+    border:none;
+    cursor:pointer;
+    color:var(--navy-600);
+    transition:color .12s ease, transform .12s ease;
+    line-height:1;
+  }
+  .star-btn.active,.star-btn:hover{color:var(--brass-bright);transform:scale(1.1);}
+  .modal-card textarea{
+    width:100%;
+    background:var(--navy-950);
+    border:1px solid var(--navy-600);
+    color:var(--paper);
+    font-family:'PT Serif',serif;
+    font-size:0.875rem;
+    padding:10px 12px;
+    border-radius:3px;
+    resize:vertical;
+    min-height:70px;
+    margin-top:6px;
+  }
+
+  /* ---- admin ---- */
+  .admin-link{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    letter-spacing:0.5px;
+    color:var(--brass-bright);
+    text-decoration:underline;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+  }
+  .admin-tabs{display:flex;gap:8px;margin-bottom:18px;}
+  .admin-tab{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-size:0.8125rem;
+    padding:9px 14px;
+    background:var(--navy-950);
+    border:1px solid var(--navy-600);
+    color:var(--paper-dim);
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .admin-tab.active{border-color:var(--brass);color:var(--brass-bright);}
+  .admin-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    border:1px solid var(--navy-600);
+    border-radius:3px;
+    padding:12px 14px;
+    margin-bottom:8px;
+    font-size:0.875rem;
+  }
+  .admin-row .who{color:var(--paper);}
+  .admin-row .meta{font-family:'JetBrains Mono',monospace;font-size:0.6875rem;color:var(--slate);display:block;margin-top:3px;}
+  .admin-pill{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.6875rem;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    border:none;
+    cursor:pointer;
+    flex:0 0 auto;
+  }
+  .admin-pill.is-paid{background:rgba(63,107,79,0.25);color:var(--ok-bright);}
+  .admin-pill.not-paid{background:rgba(139,38,53,0.25);color:var(--grave-bright);}
+  .admin-stars{color:var(--brass-bright);font-size:0.9375rem;letter-spacing:1px;}
+  .admin-list{max-height:520px;overflow-y:auto;padding-right:4px;}
 
   @media (max-width:480px){
     .wrap{padding:24px 14px 48px;}
@@ -508,9 +771,16 @@
 
   <header class="top">
     <div class="badge">PM</div>
-    <div>
+    <div style="flex:1;">
       <div class="eyebrow">Preparatório &middot; Concursos Militares</div>
       <h1>Simulado de Ética e Disciplina</h1>
+    </div>
+    <div class="a11y-controls">
+      <div class="font-controls">
+        <button id="fontDecBtn" title="Diminuir fonte">A&minus;</button>
+        <button id="fontIncBtn" title="Aumentar fonte">A&plus;</button>
+      </div>
+      <button class="theme-toggle" id="themeToggleBtn" title="Alternar tema claro/escuro">🌙</button>
     </div>
   </header>
   <p class="sub">Treine a classificação das transgressões disciplinares em <b>graves</b>, <b>médias</b> e <b>leves</b>, com base no Art. 18 do Código de Ética e Disciplina Militar. Sempre que você errar, a explicação aparece na hora &mdash; e a questão volta a ser cobrada mais adiante, para fixar o conteúdo.</p>
@@ -522,6 +792,10 @@
       <button class="tab-btn" id="tabSignup">Criar conta</button>
     </div>
 
+    <div class="form-field hidden" id="nameField">
+      <label for="authName">Nome</label>
+      <input type="text" id="authName" autocomplete="name" placeholder="Como podemos te chamar?">
+    </div>
     <div class="form-field">
       <label for="authEmail">E-mail</label>
       <input type="email" id="authEmail" autocomplete="email" placeholder="voce@email.com">
@@ -569,7 +843,7 @@
   <!-- ===================== TELA 0.5: AGUARDANDO PAGAMENTO ===================== -->
   <section id="screen-pending" class="card hidden">
     <div class="pending-icon">⏳</div>
-    <h1 style="text-align:center;font-size:22px;">Acesso ainda não liberado</h1>
+    <h1 style="text-align:center;font-size:1.375rem;">Acesso ainda não liberado</h1>
     <p class="sub" style="text-align:center;margin:10px auto 0;">Sua conta foi criada, mas o pagamento ainda não foi confirmado no nosso sistema.</p>
     <div class="pay-box">
       <b style="color:var(--paper)">Como liberar o acesso:</b><br>
@@ -587,10 +861,31 @@
 
   <!-- ===================== TELA 1: CONFIGURAÇÃO ===================== -->
   <section id="screen-setup" class="card hidden">
-    <div class="userbar" style="margin-bottom:16px;margin-top:0;">
+    <div class="userbar" style="margin-bottom:4px;margin-top:0;">
       <span id="setupEmailLabel"></span>
       <button id="logoutBtnSetup">Sair</button>
     </div>
+    <p class="welcome-line" id="welcomeLine">&nbsp;</p>
+    <button class="admin-link hidden" id="openAdminBtn" style="margin-bottom:16px;">⚙ Painel administrativo</button>
+
+    <div class="resume-banner hidden" id="resumeBanner">
+      <div class="title">Simulado em andamento</div>
+      <span id="resumeDetail" style="font-size:0.875rem;color:var(--paper-dim);"></span>
+      <div class="resume-btns">
+        <button class="btn-primary" id="resumeContinueBtn">Continuar de onde parei</button>
+        <button class="btn-ghost" id="resumeDiscardBtn">Começar novo</button>
+      </div>
+    </div>
+
+    <div class="progress-panel" id="progressPanel">
+      <div class="progress-panel-head">
+        <span class="field-label" style="margin-bottom:0;">Seu progresso</span>
+        <span class="progress-avg" id="progressAvg">&mdash;</span>
+      </div>
+      <div class="sparkline" id="sparkline"></div>
+      <div id="attemptsList"><p class="no-progress">Você ainda não finalizou nenhum simulado.</p></div>
+    </div>
+
     <span class="field-label">Quantas questões você quer responder?</span>
     <div class="count-row" id="countChips">
       <button class="chip-btn" data-n="10">10</button>
@@ -605,6 +900,28 @@
     </div>
     <p class="hint">Banco com as 161 condutas do Art. 18 (74 graves, 64 médias, 23 leves). Se você errar uma questão, ela retorna mais à frente no mesmo simulado para reforçar a memorização.</p>
     <button class="btn-primary" id="startBtn">Iniciar simulado</button>
+  </section>
+
+  <!-- ===================== TELA ADMIN ===================== -->
+  <section id="screen-admin" class="card hidden">
+    <div class="userbar" style="margin-bottom:16px;margin-top:0;">
+      <span>Painel administrativo</span>
+      <button id="closeAdminBtn">Voltar ao simulado</button>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" id="adminTabUsers">Usuários</button>
+      <button class="admin-tab" id="adminTabFeedback">Feedback</button>
+    </div>
+
+    <div id="adminUsersPanel">
+      <p class="hint" style="margin-top:0;">Clique no status para liberar/bloquear o acesso de um aluno.</p>
+      <div class="admin-list" id="adminUsersList"><p class="no-progress">Carregando...</p></div>
+    </div>
+
+    <div id="adminFeedbackPanel" class="hidden">
+      <div class="admin-list" id="adminFeedbackList"><p class="no-progress">Carregando...</p></div>
+    </div>
   </section>
 
   <!-- ===================== TELA 2: QUIZ ===================== -->
@@ -631,6 +948,7 @@
     <div class="stamp-zone" id="feedbackZone"></div>
 
     <button class="btn-primary hidden" id="nextBtn">Próxima questão</button>
+    <button class="quit-link" id="quitQuizBtn">Desistir deste simulado</button>
   </section>
 
   <!-- ===================== TELA 3: RESULTADO ===================== -->
@@ -658,7 +976,76 @@
   <footer>Baseado no Art. 18 do Código de Ética e Disciplina Militar &middot; simulado para fins de estudo</footer>
 </div>
 
+<!-- ===================== MODAL: FEEDBACK ===================== -->
+<div class="modal-overlay hidden" id="feedbackModal">
+  <div class="modal-card">
+    <span class="field-label">Como está sendo sua experiência?</span>
+    <p class="sub" style="margin-top:6px;">Sua opinião ajuda a melhorar o simulado. Leva 5 segundos.</p>
+    <div class="star-row" id="starRow">
+      <button class="star-btn" data-star="1">&#9733;</button>
+      <button class="star-btn" data-star="2">&#9733;</button>
+      <button class="star-btn" data-star="3">&#9733;</button>
+      <button class="star-btn" data-star="4">&#9733;</button>
+      <button class="star-btn" data-star="5">&#9733;</button>
+    </div>
+    <textarea id="feedbackComment" placeholder="Algum comentário? (opcional)"></textarea>
+    <button class="btn-primary" id="sendFeedbackBtn">Enviar e sair</button>
+    <button class="btn-ghost" id="skipFeedbackBtn">Pular e sair</button>
+  </div>
+</div>
+
 <script>
+/* ============================================================
+   PREFERÊNCIAS DE LEITURA — tema claro/escuro e tamanho de fonte
+   (salvas no navegador do aluno; não dependem de login)
+   ============================================================ */
+const FONT_STEPS = [14, 16, 18, 20, 22]; // px
+let fontIndex = 1;
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+const fontDecBtn = document.getElementById('fontDecBtn');
+const fontIncBtn = document.getElementById('fontIncBtn');
+
+function safeGet(key){
+  try{ return localStorage.getItem(key); } catch(e){ return null; }
+}
+function safeSet(key, val){
+  try{ localStorage.setItem(key, val); } catch(e){ /* ambiente sem storage — segue sem persistir */ }
+}
+
+function applyFontSize(){
+  document.documentElement.style.fontSize = FONT_STEPS[fontIndex] + 'px';
+  fontDecBtn.disabled = fontIndex === 0;
+  fontIncBtn.disabled = fontIndex === FONT_STEPS.length - 1;
+  safeSet('simulado_fontIndex', String(fontIndex));
+}
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  themeToggleBtn.textContent = theme === 'light' ? '🌙' : '☀️';
+  themeToggleBtn.title = theme === 'light' ? 'Mudar para modo escuro' : 'Mudar para modo claro';
+  safeSet('simulado_theme', theme);
+}
+
+fontDecBtn.addEventListener('click', () => {
+  if(fontIndex > 0){ fontIndex--; applyFontSize(); }
+});
+fontIncBtn.addEventListener('click', () => {
+  if(fontIndex < FONT_STEPS.length - 1){ fontIndex++; applyFontSize(); }
+});
+themeToggleBtn.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+(function initReadingPrefs(){
+  const savedTheme = safeGet('simulado_theme') || 'dark';
+  const savedFontIndex = parseInt(safeGet('simulado_fontIndex'), 10);
+  if(!isNaN(savedFontIndex) && savedFontIndex >= 0 && savedFontIndex < FONT_STEPS.length){
+    fontIndex = savedFontIndex;
+  }
+  applyTheme(savedTheme);
+  applyFontSize();
+})();
+
 /* ============================================================
    AUTENTICAÇÃO — Supabase (login, cadastro e controle de pagamento)
    ============================================================ */
@@ -682,22 +1069,47 @@ const els = {
   screenReset: document.getElementById('screen-reset'),
   tabLogin: document.getElementById('tabLogin'),
   tabSignup: document.getElementById('tabSignup'),
+  nameField: document.getElementById('nameField'),
+  authName: document.getElementById('authName'),
   authEmail: document.getElementById('authEmail'),
   authPass: document.getElementById('authPass'),
   authSubmitBtn: document.getElementById('authSubmitBtn'),
   authMsg: document.getElementById('authMsg'),
   pendingEmailLabel: document.getElementById('pendingEmailLabel'),
   setupEmailLabel: document.getElementById('setupEmailLabel'),
+  welcomeLine: document.getElementById('welcomeLine'),
   forgotEmail: document.getElementById('forgotEmail'),
   forgotSubmitBtn: document.getElementById('forgotSubmitBtn'),
   forgotMsg: document.getElementById('forgotMsg'),
   resetPass: document.getElementById('resetPass'),
   resetSubmitBtn: document.getElementById('resetSubmitBtn'),
   resetMsg: document.getElementById('resetMsg'),
+  resumeBanner: document.getElementById('resumeBanner'),
+  resumeDetail: document.getElementById('resumeDetail'),
+  resumeContinueBtn: document.getElementById('resumeContinueBtn'),
+  resumeDiscardBtn: document.getElementById('resumeDiscardBtn'),
+  progressAvg: document.getElementById('progressAvg'),
+  sparkline: document.getElementById('sparkline'),
+  attemptsList: document.getElementById('attemptsList'),
+  quitQuizBtn: document.getElementById('quitQuizBtn'),
+  feedbackModal: document.getElementById('feedbackModal'),
+  starRow: document.getElementById('starRow'),
+  feedbackComment: document.getElementById('feedbackComment'),
+  sendFeedbackBtn: document.getElementById('sendFeedbackBtn'),
+  skipFeedbackBtn: document.getElementById('skipFeedbackBtn'),
+  screenAdmin: document.getElementById('screen-admin'),
+  openAdminBtn: document.getElementById('openAdminBtn'),
+  closeAdminBtn: document.getElementById('closeAdminBtn'),
+  adminTabUsers: document.getElementById('adminTabUsers'),
+  adminTabFeedback: document.getElementById('adminTabFeedback'),
+  adminUsersPanel: document.getElementById('adminUsersPanel'),
+  adminFeedbackPanel: document.getElementById('adminFeedbackPanel'),
+  adminUsersList: document.getElementById('adminUsersList'),
+  adminFeedbackList: document.getElementById('adminFeedbackList'),
 };
 
 function hideAllScreens(){
-  [els.screenAuth, els.screenPending, els.screenSetup, els.screenQuiz, els.screenResult, els.screenForgot, els.screenReset]
+  [els.screenAuth, els.screenPending, els.screenSetup, els.screenQuiz, els.screenResult, els.screenForgot, els.screenReset, els.screenAdmin]
     .forEach(s => s.classList.add('hidden'));
 }
 
@@ -712,6 +1124,7 @@ els.tabLogin.addEventListener('click', () => {
   els.tabSignup.classList.remove('active');
   els.authSubmitBtn.textContent = 'Entrar';
   els.authMsg.className = 'auth-msg';
+  els.nameField.classList.add('hidden');
 });
 els.tabSignup.addEventListener('click', () => {
   authMode = 'signup';
@@ -719,19 +1132,28 @@ els.tabSignup.addEventListener('click', () => {
   els.tabLogin.classList.remove('active');
   els.authSubmitBtn.textContent = 'Criar conta';
   els.authMsg.className = 'auth-msg';
+  els.nameField.classList.remove('hidden');
 });
 
 els.authSubmitBtn.addEventListener('click', async () => {
+  const name = els.authName.value.trim();
   const email = els.authEmail.value.trim();
   const password = els.authPass.value;
   if(!email || !password){
     showAuthMsg('Preencha e-mail e senha.', 'err');
     return;
   }
+  if(authMode === 'signup' && !name){
+    showAuthMsg('Digite seu nome.', 'err');
+    return;
+  }
   els.authSubmitBtn.disabled = true;
 
   if(authMode === 'signup'){
-    const { data, error } = await supabaseClient.auth.signUp({ email, password });
+    const { data, error } = await supabaseClient.auth.signUp({
+      email, password,
+      options: { data: { name } }
+    });
     if(error){
       showAuthMsg(error.message, 'err');
       els.authSubmitBtn.disabled = false;
@@ -750,17 +1172,20 @@ els.authSubmitBtn.addEventListener('click', async () => {
   await checkSessionAndRoute();
 });
 
+let currentUserName = '';
+let isAdmin = false;
+
 async function checkAccess(user){
   const { data, error } = await supabaseClient
     .from('access')
-    .select('paid')
+    .select('paid, name, is_admin')
     .eq('id', user.id)
     .single();
   if(error){
     console.error(error);
-    return false;
+    return { paid:false, name:'', is_admin:false };
   }
-  return !!(data && data.paid);
+  return { paid: !!(data && data.paid), name: (data && data.name) || '', is_admin: !!(data && data.is_admin) };
 }
 
 async function checkSessionAndRoute(){
@@ -771,29 +1196,317 @@ async function checkSessionAndRoute(){
     return;
   }
   currentUser = session.user;
-  const paid = await checkAccess(currentUser);
+  const { paid, name, is_admin } = await checkAccess(currentUser);
+  currentUserName = name;
+  isAdmin = is_admin;
   hideAllScreens();
   if(paid){
     els.setupEmailLabel.textContent = currentUser.email;
+    els.welcomeLine.innerHTML = name ? `Olá, <b>${escapeHtml(name)}</b> 👋` : `Olá! 👋`;
+    els.openAdminBtn.classList.toggle('hidden', !isAdmin);
     els.screenSetup.classList.remove('hidden');
+    loadProgress();
+    checkResumeSession();
   } else {
     els.pendingEmailLabel.textContent = currentUser.email;
     els.screenPending.classList.remove('hidden');
   }
 }
 
+function escapeHtml(s){
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
 async function doLogout(){
+  // 1 em cada 3 saídas, mostra o pedido de feedback antes de sair de fato
+  if(currentUser && Math.random() < 0.33){
+    els.feedbackModal.classList.remove('hidden');
+    return; // o sign-out real acontece nos botões do modal
+  }
+  await finishLogout();
+}
+
+async function finishLogout(){
   await supabaseClient.auth.signOut();
   currentUser = null;
+  currentUserName = '';
+  isAdmin = false;
   hideAllScreens();
   els.screenAuth.classList.remove('hidden');
   els.authEmail.value = '';
   els.authPass.value = '';
+  els.authName.value = '';
 }
+
+/* ---- feedback ---- */
+let selectedStar = 0;
+els.starRow.addEventListener('click', (e) => {
+  const btn = e.target.closest('.star-btn');
+  if(!btn) return;
+  selectedStar = parseInt(btn.dataset.star, 10);
+  [...els.starRow.children].forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.star,10) <= selectedStar);
+  });
+});
+
+els.sendFeedbackBtn.addEventListener('click', async () => {
+  const comment = els.feedbackComment.value.trim();
+  if(currentUser && (selectedStar > 0 || comment)){
+    await supabaseClient.from('feedback').insert({
+      user_id: currentUser.id,
+      rating: selectedStar || null,
+      comment: comment || null
+    });
+  }
+  closeFeedbackModal();
+  await finishLogout();
+});
+
+els.skipFeedbackBtn.addEventListener('click', async () => {
+  closeFeedbackModal();
+  await finishLogout();
+});
+
+function closeFeedbackModal(){
+  els.feedbackModal.classList.add('hidden');
+  selectedStar = 0;
+  els.feedbackComment.value = '';
+  [...els.starRow.children].forEach(b => b.classList.remove('active'));
+}
+
+/* ---- progresso (histórico de simulados) ---- */
+async function loadProgress(){
+  if(!currentUser) return;
+  const { data, error } = await supabaseClient
+    .from('attempts')
+    .select('pct, status, created_at, correct, attempts_total')
+    .eq('user_id', currentUser.id)
+    .order('created_at', { ascending:false })
+    .limit(10);
+
+  if(error || !data || data.length === 0){
+    els.progressAvg.textContent = '—';
+    els.sparkline.innerHTML = '';
+    els.attemptsList.innerHTML = '<p class="no-progress">Você ainda não finalizou nenhum simulado.</p>';
+    return;
+  }
+
+  const completed = data.filter(a => a.status === 'completed');
+  const avg = completed.length
+    ? Math.round(completed.reduce((s,a)=>s+Number(a.pct),0) / completed.length)
+    : 0;
+  els.progressAvg.textContent = completed.length ? avg + '%' : '—';
+
+  // sparkline (mais antigo à esquerda, mais recente à direita)
+  const chronological = [...data].reverse();
+  els.sparkline.innerHTML = chronological.map(a => {
+    const pct = Number(a.pct);
+    const cls = a.status === 'abandoned' ? 'abandoned' : (pct >= 70 ? '' : (pct >= 40 ? 'mid' : 'low'));
+    const h = Math.max(8, Math.round(pct));
+    return `<div class="spark-bar ${cls}" style="height:${h}%" title="${pct}%"></div>`;
+  }).join('');
+
+  els.attemptsList.innerHTML = data.map(a => {
+    const date = new Date(a.created_at).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' });
+    const statusTag = a.status === 'abandoned' ? ' <span class="abandoned-tag">(abandonado)</span>' : '';
+    return `<div class="attempt-row"><span>${date} — ${a.correct}/${a.attempts_total} questões</span><span>${Number(a.pct)}%${statusTag}</span></div>`;
+  }).join('');
+}
+
+/* ---- retomar simulado interrompido ---- */
+async function checkResumeSession(){
+  if(!currentUser) return;
+  const { data, error } = await supabaseClient
+    .from('quiz_sessions')
+    .select('state')
+    .eq('user_id', currentUser.id)
+    .maybeSingle();
+
+  if(error || !data || !data.state){
+    els.resumeBanner.classList.add('hidden');
+    return;
+  }
+  const s = data.state;
+  els.resumeDetail.textContent = `${s.attemptsTotal || 0} de ${s.totalToPlay || 0} questões respondidas — ${s.correctCount || 0} acertos.`;
+  els.resumeBanner.classList.remove('hidden');
+}
+
+async function saveSession(){
+  if(!currentUser) return;
+  const state = {
+    queue,
+    totalToPlay,
+    correctCount,
+    wrongCount,
+    attemptsTotal,
+    missedSet: [...missedSet.entries()]
+  };
+  await supabaseClient.from('quiz_sessions').upsert({
+    user_id: currentUser.id,
+    state,
+    updated_at: new Date().toISOString()
+  });
+}
+
+async function clearSession(){
+  if(!currentUser) return;
+  await supabaseClient.from('quiz_sessions').delete().eq('user_id', currentUser.id);
+}
+
+els.resumeContinueBtn.addEventListener('click', async () => {
+  const { data } = await supabaseClient
+    .from('quiz_sessions')
+    .select('state')
+    .eq('user_id', currentUser.id)
+    .maybeSingle();
+  if(!data || !data.state){ els.resumeBanner.classList.add('hidden'); return; }
+  const s = data.state;
+  queue = s.queue || [];
+  totalToPlay = s.totalToPlay || 0;
+  correctCount = s.correctCount || 0;
+  wrongCount = s.wrongCount || 0;
+  attemptsTotal = s.attemptsTotal || 0;
+  missedSet = new Map(s.missedSet || []);
+
+  hideAllScreens();
+  els.screenQuiz.classList.remove('hidden');
+  nextQuestion();
+});
+
+els.resumeDiscardBtn.addEventListener('click', async () => {
+  await clearSession();
+  els.resumeBanner.classList.add('hidden');
+});
 
 document.getElementById('logoutBtnPending').addEventListener('click', doLogout);
 document.getElementById('logoutBtnSetup').addEventListener('click', doLogout);
 document.getElementById('checkAgainBtn').addEventListener('click', checkSessionAndRoute);
+
+/* ============================================================
+   PAINEL ADMINISTRATIVO — visível apenas para quem tem is_admin=true no banco
+   ============================================================ */
+let adminUsersCache = [];
+
+els.openAdminBtn.addEventListener('click', () => {
+  if(!isAdmin) return; // proteção extra no front — a proteção de verdade é a RLS do banco
+  hideAllScreens();
+  els.screenAdmin.classList.remove('hidden');
+  showAdminTab('users');
+  loadAdminUsers();
+});
+
+els.closeAdminBtn.addEventListener('click', () => {
+  hideAllScreens();
+  els.screenSetup.classList.remove('hidden');
+});
+
+function showAdminTab(tab){
+  els.adminTabUsers.classList.toggle('active', tab === 'users');
+  els.adminTabFeedback.classList.toggle('active', tab === 'feedback');
+  els.adminUsersPanel.classList.toggle('hidden', tab !== 'users');
+  els.adminFeedbackPanel.classList.toggle('hidden', tab !== 'feedback');
+}
+els.adminTabUsers.addEventListener('click', () => showAdminTab('users'));
+els.adminTabFeedback.addEventListener('click', () => {
+  showAdminTab('feedback');
+  loadAdminFeedback();
+});
+
+async function loadAdminUsers(){
+  els.adminUsersList.innerHTML = '<p class="no-progress">Carregando...</p>';
+  const { data, error } = await supabaseClient
+    .from('access')
+    .select('id, email, name, paid, is_admin, created_at')
+    .order('created_at', { ascending:false });
+
+  if(error){
+    els.adminUsersList.innerHTML = `<p class="no-progress">Erro ao carregar: ${error.message}</p>`;
+    return;
+  }
+  adminUsersCache = data || [];
+  renderAdminUsers();
+}
+
+function renderAdminUsers(){
+  if(adminUsersCache.length === 0){
+    els.adminUsersList.innerHTML = '<p class="no-progress">Nenhum usuário cadastrado ainda.</p>';
+    return;
+  }
+  els.adminUsersList.innerHTML = adminUsersCache.map(u => {
+    const date = new Date(u.created_at).toLocaleDateString('pt-BR');
+    const adminTag = u.is_admin ? ' <span style="color:var(--brass-bright);">(admin)</span>' : '';
+    return `
+      <div class="admin-row">
+        <div>
+          <span class="who">${escapeHtml(u.name || 'Sem nome')}${adminTag}</span>
+          <span class="meta">${escapeHtml(u.email)} &middot; cadastrado em ${date}</span>
+        </div>
+        <button class="admin-pill ${u.paid ? 'is-paid' : 'not-paid'}" data-id="${u.id}">
+          ${u.paid ? 'Pago' : 'Pendente'}
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+els.adminUsersList.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.admin-pill');
+  if(!btn) return;
+  const id = btn.dataset.id;
+  const user = adminUsersCache.find(u => u.id === id);
+  if(!user) return;
+  const newPaid = !user.paid;
+  btn.disabled = true;
+  const { error } = await supabaseClient.from('access').update({ paid: newPaid }).eq('id', id);
+  btn.disabled = false;
+  if(error){ alert('Erro ao atualizar: ' + error.message); return; }
+  user.paid = newPaid;
+  renderAdminUsers();
+});
+
+async function loadAdminFeedback(){
+  els.adminFeedbackList.innerHTML = '<p class="no-progress">Carregando...</p>';
+  const { data, error } = await supabaseClient
+    .from('feedback')
+    .select('rating, comment, created_at, user_id')
+    .order('created_at', { ascending:false })
+    .limit(100);
+
+  if(error){
+    els.adminFeedbackList.innerHTML = `<p class="no-progress">Erro ao carregar: ${error.message}</p>`;
+    return;
+  }
+  if(!data || data.length === 0){
+    els.adminFeedbackList.innerHTML = '<p class="no-progress">Nenhum feedback recebido ainda.</p>';
+    return;
+  }
+
+  // usa o cache de usuários pra mostrar o e-mail de quem enviou
+  if(adminUsersCache.length === 0){
+    const res = await supabaseClient.from('access').select('id, email, name');
+    adminUsersCache = res.data || [];
+  }
+  const userMap = new Map(adminUsersCache.map(u => [u.id, u]));
+
+  els.adminFeedbackList.innerHTML = data.map(f => {
+    const date = new Date(f.created_at).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' });
+    const stars = f.rating ? '★'.repeat(f.rating) + '☆'.repeat(5 - f.rating) : '(sem nota)';
+    const u = userMap.get(f.user_id);
+    const who = u ? (u.name || u.email) : 'usuário removido';
+    return `
+      <div class="admin-row" style="flex-direction:column;align-items:flex-start;">
+        <div style="display:flex;justify-content:space-between;width:100%;">
+          <span class="admin-stars">${stars}</span>
+          <span class="meta">${date}</span>
+        </div>
+        ${f.comment ? `<p style="margin:8px 0 4px;color:var(--paper-dim);font-size:0.875rem;">${escapeHtml(f.comment)}</p>` : ''}
+        <span class="meta">${escapeHtml(who)}</span>
+      </div>
+    `;
+  }).join('');
+}
 
 /* ---- esqueci minha senha ---- */
 function showForgotMsg(text, type){
@@ -1109,15 +1822,18 @@ document.getElementById('startBtn').addEventListener('click', ()=>{
 function startQuiz(n){
   const pool = shuffle(BANK).slice(0, n);
   queue = pool.map(q=>({...q, wrongOnce:false}));
+  totalToPlay = n;
   correctCount = 0;
   wrongCount = 0;
   attemptsTotal = 0;
   missedSet = new Map();
 
+  els.resumeBanner.classList.add('hidden');
   document.getElementById('screen-setup').classList.add('hidden');
   document.getElementById('screen-result').classList.add('hidden');
   document.getElementById('screen-quiz').classList.remove('hidden');
 
+  saveSession();
   nextQuestion();
 }
 
@@ -1190,6 +1906,7 @@ document.getElementById('optionsWrap').addEventListener('click', (e)=>{
 
   document.getElementById('nextBtn').classList.remove('hidden');
   updateHUD();
+  saveSession();
 });
 
 function renderFeedback(isCorrect){
@@ -1233,15 +1950,30 @@ function showResults(){
     [...missedSet.values()].forEach(({q,timesWrong})=>{
       const div = document.createElement('div');
       div.className = 'missed-item';
-      div.innerHTML = `${capitalize(q.text)} <span class="tag ${q.cls}">${CLASS_LABEL[q.cls]}</span> <span style="color:var(--slate);font-family:'JetBrains Mono',monospace;font-size:11px;">— errada ${timesWrong}x</span>`;
+      div.innerHTML = `${capitalize(q.text)} <span class="tag ${q.cls}">${CLASS_LABEL[q.cls]}</span> <span style="color:var(--slate);font-family:'JetBrains Mono',monospace;font-size:0.6875rem;">— errada ${timesWrong}x</span>`;
       listEl.appendChild(div);
     });
+  }
+
+  clearSession();
+  if(currentUser && attemptsTotal > 0){
+    supabaseClient.from('attempts').insert({
+      user_id: currentUser.id,
+      total_questions: totalToPlay,
+      correct: correctCount,
+      wrong: wrongCount,
+      attempts_total: attemptsTotal,
+      pct: pct,
+      status: 'completed'
+    }).then(() => { if(!els.screenSetup.classList.contains('hidden')) loadProgress(); });
   }
 }
 
 document.getElementById('restartBtn').addEventListener('click', ()=>{
   document.getElementById('screen-result').classList.add('hidden');
   document.getElementById('screen-setup').classList.remove('hidden');
+  loadProgress();
+  checkResumeSession();
 });
 
 document.getElementById('reviewAgainBtn').addEventListener('click', ()=>{
@@ -1252,7 +1984,35 @@ document.getElementById('reviewAgainBtn').addEventListener('click', ()=>{
   correctCount = 0; wrongCount = 0; attemptsTotal = 0; missedSet = new Map();
   document.getElementById('screen-result').classList.add('hidden');
   document.getElementById('screen-quiz').classList.remove('hidden');
+  saveSession();
   nextQuestion();
+});
+
+/* -------- desistir do simulado -------- */
+els.quitQuizBtn.addEventListener('click', async () => {
+  const confirmQuit = window.confirm('Tem certeza que quer desistir deste simulado? Ele vai contar no seu progresso com uma pontuação reduzida.');
+  if(!confirmQuit) return;
+
+  const rawPct = attemptsTotal > 0 ? Math.round((correctCount/attemptsTotal)*100) : 0;
+  const penalizedPct = Math.round(rawPct * 0.7); // penalidade por desistência
+
+  if(currentUser && attemptsTotal > 0){
+    await supabaseClient.from('attempts').insert({
+      user_id: currentUser.id,
+      total_questions: totalToPlay,
+      correct: correctCount,
+      wrong: wrongCount,
+      attempts_total: attemptsTotal,
+      pct: penalizedPct,
+      status: 'abandoned'
+    });
+  }
+  await clearSession();
+
+  hideAllScreens();
+  els.screenSetup.classList.remove('hidden');
+  els.resumeBanner.classList.add('hidden');
+  loadProgress();
 });
 </script>
 </body>
